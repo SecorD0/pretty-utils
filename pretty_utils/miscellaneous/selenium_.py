@@ -9,129 +9,131 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 class Sel:
-    def get_element(self, browser: webdriver, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
+    def __init__(self, browser: webdriver):
+        self.browser = browser
+
+    def get_element(self, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
         """
         Explicit waits of an element appearing.
 
-        :param browser: a Selenium webdriver
-        :param find_it: a string to search for the element
-        :param sec: the element waiting time (10)
-        :param by: find the element by ... (XPATH)
+        :param str find_it: a string to search for the element
+        :param int sec: the element waiting time (10)
+        :param str by: find the element by ... (XPATH)
         :return: the founded element
         """
-        return WebDriverWait(browser, sec).until(EC.presence_of_element_located((by, find_it)))
+        return WebDriverWait(self.browser, sec).until(EC.presence_of_element_located((by, find_it)))
 
-    def get_text(self, browser: webdriver, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[str]:
+    def get_text(self, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[str]:
         """
         Explicit waits of an element appearing and get its text.
 
-        :param browser: a Selenium webdriver
-        :param find_it: a string to search for the element
-        :param sec: the element waiting time (10)
-        :param by: find the element by ... (XPATH)
+        :param str find_it: a string to search for the element
+        :param int sec: the element waiting time (10)
+        :param str by: find the element by ... (XPATH)
         :return: the parsed text
         """
         try:
-            return self.get_element(browser, find_it, sec, by).text
+            return self.get_element(find_it, sec, by).text
         except:
             pass
 
-    def clear(self, browser: webdriver, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
+    def wait_for_clickability(self, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
+        """
+        Waiting for an element to become clickable.
+
+        :param str find_it: a string to search for the element
+        :param int sec: the element waiting time (10)
+        :param str by: find the element by ... (XPATH)
+        :return: the founded element
+        """
+        return WebDriverWait(self.browser, sec).until(EC.element_to_be_clickable((by, find_it)))
+
+    def clear(self, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
         """
         Explicit waits of an element appearing and clear its contents.
 
-        :param browser: a Selenium webdriver
-        :param find_it: a string to search for the element
-        :param sec: the element waiting time (10)
-        :param by: find the element by ... (XPATH)
+        :param str find_it: a string to search for the element
+        :param int sec: the element waiting time (10)
+        :param str by: find the element by ... (XPATH)
         :return: the founded element
         """
-        element = self.get_element(browser, find_it, sec, by)
+        element = self.get_element(find_it, sec, by)
         element.clear()
         return element
 
-    def write(self, browser, find_it, text, sec: int = 10, by: str = By.XPATH, clear: bool = True) -> Optional[
+    def write(self, find_it: str, text: str, sec: int = 10, by: str = By.XPATH, clear: bool = True) -> Optional[
         WebElement]:
         """
         Explicit waits of an element appearing and write a text to it.
 
-        :param browser: a Selenium webdriver
-        :param find_it: a string to search for the element
-        :param text: a text to write
-        :param sec: the element waiting time (10)
-        :param by: find the element by ... (XPATH)
-        :param clear: clear the element before writing (True)
+        :param str find_it: a string to search for the element
+        :param str text: a text to write
+        :param int sec: the element waiting time (10)
+        :param str by: find the element by ... (XPATH)
+        :param bool clear: clear the element before writing (True)
         :return: the founded element
         """
-        element = self.get_element(browser, find_it, sec, by)
+        element = self.get_element(find_it, sec, by)
         if clear:
             element.clear()
         element.send_keys(text)
         return element
 
-    def click(self, browser: webdriver, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
+    def click(self, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
         """
         Explicit waits of an element appearing and click it.
 
-        :param browser: a Selenium webdriver
-        :param find_it: a string to search for the element
-        :param sec: the element waiting time (10)
-        :param by: find the element by ... (XPATH)
+        :param str find_it: a string to search for the element
+        :param int sec: the element waiting time (10)
+        :param str by: find the element by ... (XPATH)
         :return: the founded element
         """
-        element = self.get_element(browser, find_it, sec, by)
+        element = self.get_element(find_it, sec, by)
         element.click()
         return element
 
-    def click_js(self, browser: webdriver, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
+    def click_js(self, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
         """
         Explicit waits of an element appearing and click it using JS script (use it if simple click has no effect).
 
-        :param browser: a Selenium webdriver
-        :param find_it: a string to search for the element
-        :param sec: the element waiting time (10)
-        :param by: find the element by ... (XPATH)
+        :param str find_it: a string to search for the element
+        :param int sec: the element waiting time (10)
+        :param str by: find the element by ... (XPATH)
         :return: the founded element
         """
-        element = webdriver.support.ui.WebDriverWait(browser, sec).until(EC.element_to_be_clickable((by, find_it)))
-        browser.execute_script("arguments[0].click();", element)
+        element = self.wait_for_clickability(find_it, sec, by)
+        self.browser.execute_script('arguments[0].click();', element)
         return element
 
-    def click_when_clicable(self, browser: webdriver, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[
-        WebElement]:
+    def click_when_clicable(self, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
         """
         Explicit waits of an element appearing and click it when clickable.
 
-        :param browser: a Selenium webdriver
-        :param find_it: a string to search for the element
-        :param sec: the element waiting time (10)
-        :param by: find the element by ... (XPATH)
+        :param str find_it: a string to search for the element
+        :param int sec: the element waiting time (10)
+        :param str by: find the element by ... (XPATH)
         :return: the founded element
         """
-        element = WebDriverWait(browser, sec).until(EC.element_to_be_clickable((by, find_it)))
+        element = self.wait_for_clickability(find_it, sec, by)
         element.click()
         return element
 
-    def click_with_coord(self, browser: webdriver, find_it: str or WebElement, sec: int = 10, by: str = By.XPATH,
-                         x_off: int = 1, y_off: int = 1) -> Optional[WebElement]:
+    def click_with_coord(self, find_it: str or WebElement, sec: int = 10, by: str = By.XPATH, x_off: int = 1,
+                         y_off: int = 1) -> Optional[WebElement]:
         """
         Explicit waits of an element appearing and click it via coordinates.
 
-        :param browser: a Selenium webdriver
-        :param find_it: a string or WebElement to interact
-        :param sec: the element waiting time (10)
-        :param by: find the element by ... (XPATH)
-        :param x_off: x coordinate (1)
-        :param y_off: y coordinate (1)
+        :param str find_it: a string or WebElement to interact
+        :param int sec: the element waiting time (10)
+        :param str by: find the element by ... (XPATH)
+        :param int x_off: x coordinate (1)
+        :param int y_off: y coordinate (1)
         :return: the founded element
         """
         if isinstance(find_it, str):
-            element = self.get_element(browser, find_it, sec, by)
+            element = self.get_element(find_it, sec, by)
         else:
             element = find_it
 
-        ActionChains(browser).move_to_element(element).move_by_offset(x_off, y_off).click().perform()
+        ActionChains(self.browser).move_to_element(element).move_by_offset(x_off, y_off).click().perform()
         return element
-
-
-sel = Sel()
