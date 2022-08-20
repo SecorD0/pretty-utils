@@ -23,7 +23,7 @@ def touch(path: str, file: bool = False) -> bool:
     return False
 
 
-def read_lines(path: str) -> list:
+def read_lines(path: str, skip_empty_rows: bool = False) -> list:
     """
     Read a file and return a list of lines.
 
@@ -32,6 +32,9 @@ def read_lines(path: str) -> list:
     """
     with open(path) as f:
         lines = f.readlines()
+    lines = [line.rstrip() for line in lines]
+    if skip_empty_rows:
+        lines.remove('')
     return lines
 
 
