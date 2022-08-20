@@ -33,9 +33,11 @@ def read_lines(path: str, skip_empty_rows: bool = False) -> list:
     """
     with open(path) as f:
         lines = f.readlines()
+
     lines = [line.rstrip() for line in lines]
-    if skip_empty_rows:
+    if skip_empty_rows and '' in lines:
         lines.remove('')
+
     return lines
 
 
