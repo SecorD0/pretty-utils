@@ -16,8 +16,8 @@ def strtime_to_unix(strtime: str, utc_offset: int = 0, format: str = '%d.%m.%Y %
         tzinfo=timezone(timedelta(seconds=utc_offset * 60 * 60))).timestamp())
 
 
-def unix_to_strtime(unix_time: int or float or str = time.time(), utc_offset: Optional[int] = None,
-                          format: str = '%d.%m.%Y %H:%M'):
+def unix_to_strtime(unix_time: int or float or str = None, utc_offset: Optional[int] = None,
+                    format: str = '%d.%m.%Y %H:%M'):
     """
     Convert unix to string time. In particular return the current time.
 
@@ -26,6 +26,9 @@ def unix_to_strtime(unix_time: int or float or str = time.time(), utc_offset: Op
     :param format: format for string time output (%d.%m.%Y %H:%M)
     :return: the string time
     """
+    if not unix_time:
+        unix_time = time.time()
+
     if isinstance(unix_time, str):
         unix_time = int(unix_time)
 
