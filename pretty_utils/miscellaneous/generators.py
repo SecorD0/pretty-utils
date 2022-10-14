@@ -1,10 +1,18 @@
 def nickname(len: int = 9, capital: bool = False) -> str:
     """
-    Generate a nickname.
+    Deprecated, use username.
 
-    :param len: length of a nickname (9)
+    """
+    return username(len, capital)
+
+
+def username(len: int = 9, capital: bool = False) -> str:
+    """
+    Generate a username.
+
+    :param len: length of a username (9)
     :param capital: capitalize the first letter (False)
-    :return: the generated nickname
+    :return: the generated username
     """
     from random import choice, randint
 
@@ -38,7 +46,6 @@ def password(len: int = 16, use_capitals: bool = True, use_digits: bool = True, 
     """
     from random import choice
     from string import ascii_lowercase, ascii_uppercase, digits
-
 
     lowers = ascii_lowercase
     capitals = ascii_uppercase

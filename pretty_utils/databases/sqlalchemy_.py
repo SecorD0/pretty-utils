@@ -10,7 +10,16 @@ class DBException(Exception):
 
 
 class DB:
+    """
+    It's a class that simplifies working with the SQLAlchemy library.
+    """
+
     def __init__(self, db_url: str, **kwargs):
+        """
+        Initializes a class.
+
+        :param str db_url: a URL containing all the necessary parameters to connect to a DB
+        """
         self.db_url = db_url
         self.create_database()
         self.engine = create_engine(self.db_url, **kwargs)
@@ -19,14 +28,20 @@ class DB:
         self.s: Session = session()
         self.conn = self.engine.connect()
 
-    def create_database(self):
+    def create_database(self, database: str = ''):
         """
         Creates a database if it doesn't exist.
+
+        :param str database: a database name
         """
         try:
-            db_url = self.db_url.split('/')
-            database = db_url[-1]
-            db_url = '/'.join(db_url[0:-1])
+            if not database:
+                db_url = self.db_url.split('/')
+                database = db_url[-1]
+                db_url = '/'.join(db_url[0:-1])
+            else:
+                db_url = self.db_url
+
             engine = create_engine(db_url)
             with engine.connect() as conn:
                 conn.execute('COMMIT')
