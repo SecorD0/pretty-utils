@@ -1,7 +1,6 @@
 def nickname(len: int = 9, capital: bool = False) -> str:
     """
     Deprecated, use username.
-
     """
     return username(len, capital)
 

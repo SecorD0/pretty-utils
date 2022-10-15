@@ -9,7 +9,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 class Sel:
+    """
+    It's a class that simplifies working with the Selenium library.
+    """
+
     def __init__(self, browser: webdriver):
+        """
+        Initializes a class.
+
+        :param webdriver browser: instance of WebDriver (Ie, Firefox, Chrome or Remote)
+        """
         self.browser = browser
 
     def get_element(self, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
@@ -19,7 +28,7 @@ class Sel:
         :param str find_it: a string to search for the element
         :param int sec: the element waiting time (10)
         :param str by: find the element by ... (XPATH)
-        :return: the founded element
+        :return WebElement: the founded element
         """
         return WebDriverWait(self.browser, sec).until(EC.presence_of_element_located((by, find_it)))
 
@@ -30,7 +39,7 @@ class Sel:
         :param str find_it: a string to search for the element
         :param int sec: the element waiting time (10)
         :param str by: find the element by ... (XPATH)
-        :return: the parsed text
+        :return str: the parsed text
         """
         try:
             return self.get_element(find_it, sec, by).text
@@ -44,7 +53,7 @@ class Sel:
         :param str find_it: a string to search for the element
         :param int sec: the element waiting time (10)
         :param str by: find the element by ... (XPATH)
-        :return: the founded element
+        :return WebElement: the founded element
         """
         return WebDriverWait(self.browser, sec).until(EC.element_to_be_clickable((by, find_it)))
 
@@ -55,7 +64,7 @@ class Sel:
         :param str find_it: a string to search for the element
         :param int sec: the element waiting time (10)
         :param str by: find the element by ... (XPATH)
-        :return: the founded element
+        :return WebElement: the founded element
         """
         element = self.get_element(find_it, sec, by)
         element.clear()
@@ -71,7 +80,7 @@ class Sel:
         :param int sec: the element waiting time (10)
         :param str by: find the element by ... (XPATH)
         :param bool clear: clear the element before writing (True)
-        :return: the founded element
+        :return WebElement: the founded element
         """
         element = self.get_element(find_it, sec, by)
         if clear:
@@ -86,7 +95,7 @@ class Sel:
         :param str find_it: a string to search for the element
         :param int sec: the element waiting time (10)
         :param str by: find the element by ... (XPATH)
-        :return: the founded element
+        :return WebElement: the founded element
         """
         element = self.get_element(find_it, sec, by)
         element.click()
@@ -94,12 +103,12 @@ class Sel:
 
     def click_js(self, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
         """
-        Explicit waits of an element appearing and click it using JS script (use it if simple click has no effect).
+        Explicit waits of an element appearing and click it using JS script. Use it if simple click has no effect.
 
         :param str find_it: a string to search for the element
         :param int sec: the element waiting time (10)
         :param str by: find the element by ... (XPATH)
-        :return: the founded element
+        :return WebElement: the founded element
         """
         element = self.wait_for_clickability(find_it, sec, by)
         self.browser.execute_script('arguments[0].click();', element)
@@ -112,7 +121,7 @@ class Sel:
         :param str find_it: a string to search for the element
         :param int sec: the element waiting time (10)
         :param str by: find the element by ... (XPATH)
-        :return: the founded element
+        :return WebElement: the founded element
         """
         element = self.wait_for_clickability(find_it, sec, by)
         element.click()
@@ -128,7 +137,7 @@ class Sel:
         :param str by: find the element by ... (XPATH)
         :param int x_off: x coordinate (1)
         :param int y_off: y coordinate (1)
-        :return: the founded element
+        :return WebElement: the founded element
         """
         if isinstance(find_it, str):
             element = self.get_element(find_it, sec, by)
