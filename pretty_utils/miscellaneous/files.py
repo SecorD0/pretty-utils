@@ -5,7 +5,7 @@ import sys
 
 def touch(path: str, file: bool = False) -> bool:
     """
-    Create an object (file or directory) if it doesn't exists.
+    Create an object (file or directory) if it doesn't exist.
 
     :param str path: path to the object
     :param bool file: is it a file?
@@ -24,11 +24,23 @@ def touch(path: str, file: bool = False) -> bool:
     return False
 
 
+def write_json(path: str, obj: str or dict):
+    """
+    Write Python list or dictionary to a JSON file.
+
+    :param str path: path to the JSON file
+    :param list or dict obj: the Python list or dictionary
+    """
+    with open(path, 'w') as f:
+        json.dump(obj, f)
+
+
 def read_lines(path: str, skip_empty_rows: bool = False) -> list:
     """
     Read a file and return a list of lines.
 
     :param str path: path to the file
+    :param bool skip_empty_rows: if True it doesn't include empty rows to the list
     :return list: the list of lines
     """
     with open(path) as f:
