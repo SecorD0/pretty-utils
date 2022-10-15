@@ -731,10 +731,234 @@ print(unix_to_strtime(utc_offset=3, format="%d.%m.%Y %H:%M:%S"))
 
 
 
+<h1><p align="center">type_functions</p></h1>
+<p align="right"><a href="#Content">To the content</a></p>
+
+⠀Functions for working with certain Build-in Python data types.
+
+
+<h2><p align="center">bools</p></h2>
+
+⠀Functions for working with boolean data type.
+
+<h3><p align="center">randbool</p></h3>
+
+⠀Returns a random bool.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.bools import randbool
+
+print(randbool())
+# True
+print(randbool())
+# False
+```
+
+
+<h2><p align="center">floats</p></h2>
+
+⠀Functions for working with float data type.
+
+<h3><p align="center">randfloat</p></h3>
+
+⠀Return a random float from the range.
+
+⠀Accepted arguments:
+- from_ (int or float) — the minimum value
+- to_ (int or float) — the maximum value
+- step (int or float) — the step size (0.1)
+
+⠀Returns float — the random float.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.floats import randfloat
+
+print(randfloat(5.3, 6.2))
+# 5.3
+
+print(randfloat(0.6, 1.7, 0.3))
+# 1.5
+
+print(randfloat(0.6, 0.7, 0.02))
+# 0.7
+```
+
+<h3><p align="center">float_range</p></h3>
+
+⠀Return a float range.
+
+⠀Accepted arguments:
+- from_ (int or float) — a range start value
+- to_ (int or float) — the range stop value, not included
+- step (int or float) — the step size (0.1)
+
+⠀Returns list — the range list.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.floats import float_range
+
+print(float_range(5.3, 6.2))
+# [5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 5.9, 6.0, 6.1]
+
+print(float_range(0.6, 1.7, 0.3))
+# [0.6, 0.9, 1.2, 1.5]
+
+print(float_range(0.6, 0.7, 0.02))
+# [0.6, 0.62, 0.64, 0.66, 0.68]
+
+print(float_range(7.25, 6.91, -0.05))
+# [7.25, 7.2, 7.15, 7.1, 7.05, 7.0, 6.95]
+```
+
+<h2><p align="center">lists</p></h2>
+
+⠀Functions for working with list data type.
+
+<h3><p align="center">split_list</p></h3>
+
+⠀Split a list to several lists.
+
+⠀Accepted arguments:
+- s_list (list) — a list to split
+- n (int) — split the list into parts of N elements (100)
+- parts (bool) — split the list into N parts (False)
+
+⠀Returns list — the split list.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.lists import split_list
+
+l = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12]]
+
+for sl in split_list(l, 2):
+    print(sl)
+# [[1, 2], [3, 4]]
+# [[5, 6], [7, 8]]
+# [[9, 10], [11, 12]]
+    
+print()
+
+for sl in split_list(l, 2, True):
+    print(sl)
+# [[1, 2], [3, 4], [5, 6]]
+# [[7, 8], [9, 10], [11, 12]]
+```
+
+<h3><p align="center">replace_to_null</p></h3>
+
+⠀Replace all None in a list with 0.
+
+⠀Accepted arguments:
+- r_list (list) — a list to replace
+
+⠀Returns list — the processed list.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.lists import replace_to_null
+
+print(replace_to_null([22, None, 84, None, None, 1, 0]))
+# [22, 0, 84, 0, 0, 1, 0]
+```
+
+
+<h2><p align="center">strings</p></h2>
+
+⠀Functions for working with string data type.
+
+<h3><p align="center">text_between</p></h3>
+
+⠀Extract a text between strings.
+
+⠀Accepted arguments:
+- text (str) — a source text
+- begin (str) — a string from the end of which to start the extraction
+- end (str) — a string at the beginning of which the extraction should end
+
+⠀Returns str — the extracted text or empty string if nothing is found.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.strings import text_between
+
+text = '''
+Well done is better than well said.
+Save when you can and not when you have to.
+Don't slay dragons that aren't in your way.
+'''
+
+print(text_between(text, 'when ', ' slay') + '\n---')
+# you can and not when you have to.
+# Don't
+# ---
+
+print(text_between(text, end='when') + '\n---')
+#
+# Well done is better than well said.
+# Save 
+# ---
+
+print(text_between(text, 'dragons ') + '\n---')
+# that aren't in your way.
+#
+# ---
+
+print(text_between(text, 'another') + '\n---')
+#
+# ---
+
+print(text_between(text, 'you ', ' you'))
+# can and not when
+```
+
+<h3><p align="center">del_ws</p></h3>
+
+⠀Delete whitespaces.
+
+⠀Accepted arguments:
+- text (str) — a source text
+
+⠀Returns str — the text without whitespaces.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.strings import del_ws
+
+text = 'Well done is better than well said.'
+
+print(del_ws(text))
+# Welldoneisbetterthanwellsaid.
+```
+
+<h3><p align="center">format_number</p></h3>
+
+⠀Return formatted number like 3 392 233.9420.
+
+⠀Accepted arguments:
+- number (int or float) — a number for formatting
+
+⠀Returns str — the formatted number.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.strings import format_number
+
+print(format_number(14_386_730))
+# 14 386 730
+print(format_number(8401.6047))
+# 8 401.6047
+```
+
+
+
 <h1><p align="center">Report a bug or suggest an idea</p></h1>
 <p align="right"><a href="#Content">To the content</a></p>
 
-⠀If you found a bug or have an idea, go to [the link](https://github.com/SecorD0/mafiles-toolkit/issues/new/choose),
+⠀If you found a bug or have an idea, go to [the link](https://github.com/SecorD0/pretty-utils/issues/new/choose),
 select the template, fill it out and submit it.
 
 
