@@ -1,6 +1,6 @@
 <h1><p align="center">Pretty Utils</p></h1>
 
-<p align="center"><img src="images/icon.ico" width="400"></p>
+<p align="center"><img src="images/icons/app.png" width="400"></p>
 
 
 
@@ -8,23 +8,71 @@
 
 - [Short description](#Short-description)
 - [Useful links](#Useful-links)
-- [File structure](#File-structure)
-- [How to run](#How-to-run)
-    - [Windows](#Windows)
-    - [Source code](#Source-code)
-- [Functions](#Functions)
-    - [Find maFiles by account logins and/or SteamID64s](#Find-maFiles-by-account-logins-andor-SteamID64s)
-    - [Name maFiles as logins](#Name-maFiles-as-logins)
-    - [Name maFiles as SteamID64s](#Name-maFiles-as-SteamID64s)
-    - [Add maFiles to the manifest](#Add-maFiles-to-the-manifest)
-    - [Exclude non-existent maFiles from the manifest](#Exclude-non-existent-maFiles-from-the-manifest)
+- [Installation](#Installation)
+- [databases](#databases)
+    - [mysql](#mysql)
+      - [DB](#DB)
+      - [execute](#execute)
+    - [sqlalchemy_](#sqlalchemy_)
+      - [DB](#DB-1)
+      - [create_database](#create_database)
+      - [create_tables](#create_tables)
+      - [all](#all)
+      - [one](#one)
+      - [execute](#execute-1)
+      - [commit](#commit)
+      - [insert](#insert)
+    - [sqlite](#sqlite)
+- [miscellaneous](#miscellaneous)
+    - [files](#files)
+      - [touch](#touch)
+      - [write_json](#write_json)
+      - [read_lines](#read_lines)
+      - [read_json](#read_json)
+      - [resource_path](#resource_path)
+    - [generators](#generators)
+      - [username](#username)
+      - [password](#password)
+    - [selenium_](#selenium_)
+      - [Sel](#Sel)
+      - [get_element](#get_element)
+      - [get_text](#get_text)
+      - [wait_for_clickability](#wait_for_clickability)
+      - [clear](#clear)
+      - [write](#write)
+      - [click](#click)
+      - [click_js](#click_js)
+      - [click_when_clicable](#click_when_clicable)
+      - [click_with_coord](#click_with_coord)
+    - [time_and_date](#time_and_date)
+      - [strtime_to_unix](#strtime_to_unix)
+      - [unix_to_strtime](#unix_to_strtime)
+- [type_functions](#type_functions)
+  - [bools](#bools)
+    - [randbool](#randbool)
+  - [floats](#floats)
+    - [randfloat](#randfloat)
+    - [float_range](#float_range)
+  - [lists](#lists)
+    - [split_list](#split_list)
+    - [replace_to_null](#replace_to_null)
+  - [strings](#strings)
+    - [text_between](#text_between)
+    - [del_ws](#del_ws)
+    - [format_number](#format_number)
 - [Report a bug or suggest an idea](#Report-a-bug-or-suggest-an-idea)
 - [Express your gratitude](#Express-your-gratitude)
 
 <h1><p align="center">Short description</p></h1>
 <p align="right"><a href="#Content">To the content</a></p>
 
-⠀Convenient Python functions in one package.
+⠀The library contains convenient functions that are designed to replace routine actions. The library was created by the author to simplify personal work with the tools he uses, such as:
+- Regular Python objects;
+- MySQL;
+- SQLAlchemy;
+- Selenium, etc.
+
+⠀After a while, he decided to publish the library, so if you find something useful for yourself, be sure to use it!
 
 
 
