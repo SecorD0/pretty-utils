@@ -8,7 +8,7 @@ class DBException(Exception):
     pass
 
 
-class DB():
+class DB:
     """
     It's a class to interact with a MySQL database via SQL queries.
     """
@@ -46,13 +46,13 @@ class DB():
         except Exception as e:
             raise DBException(f'\n{str(e)}')
 
-    def execute(self, query: str, data: Optional[tuple] = None, ret1: bool = False):
+    def execute(self, query: str, data: Optional[tuple] = None, fetchone: bool = False):
         """
         Executes SQL queries.
 
         :param str query: a query
         :param str data: a data for query
-        :param str ret1: if True uses fetchone, otherwise uses fetchall in SELECT queries (False)
+        :param str fetchone: if True uses fetchone, otherwise uses fetchall in SELECT queries (False)
         """
         try:
             if not self.conn:
@@ -67,7 +67,7 @@ class DB():
                     self.conn.commit()
 
                 elif 'SELECT' in query:
-                    if ret1:
+                    if fetchone:
                         return self.cursor.fetchone()
                     else:
                         return self.cursor.fetchall()

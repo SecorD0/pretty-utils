@@ -23,6 +23,10 @@
       - [commit](#commit)
       - [insert](#insert)
     - [sqlite](#sqlite)
+      - [DB](#DB-2)
+      - [execute](#execute-2)
+      - [dynamic_class](#dynamic_class)
+      - [make_sql](#make_sql)
 - [miscellaneous](#miscellaneous)
     - [files](#files)
       - [touch](#touch)
@@ -101,11 +105,9 @@ pip install --force-reinstall git+https://github.com/SecorD0/pretty-utils
 
 <h2><p align="center">mysql</p></h2>
 
-⠀It's a class to interact with a MySQL database via SQL queries.
-
 <h3><p align="center">DB</p></h3>
 
-⠀Initializes a class.
+⠀It's a class to interact with a MySQL database via SQL queries. `__init__` initializes a class.
 
 ⠀Accepted arguments:
 - database (str) — a database name
@@ -130,7 +132,7 @@ db = DB(database='bot', passwd=str(os.getenv('DB_PASSWORD')))
 ⠀Accepted arguments:
 - query (str) — a query
 - data (tuple) — a data for query
-- ret1 (bool) — if `True` uses `fetchone`, otherwise uses `fetchall` in SELECT queries
+- fetchone (bool) — if `True` uses `fetchone`, otherwise uses `fetchall` in SELECT queries
 
 ⠀Usage:
 ```py
@@ -146,7 +148,7 @@ res = db.execute('SELECT * FROM users')
 print(res)
 # [(1, 33, 'username'), (2, 102, 'gok')]
 db.execute('UPDATE users SET username = %s WHERE u_id = %s', ('new_username', 33,))
-res = db.execute('SELECT * FROM users', ret1=True)
+res = db.execute('SELECT * FROM users', fetchone=True)
 print(res)
 # (1, 33, 'new_username')
 ```
@@ -154,11 +156,9 @@ print(res)
 
 <h2><p align="center">sqlalchemy_</p></h2>
 
-⠀It's a class that simplifies working with the SQLAlchemy library.
-
 <h3><p align="center">DB</p></h3>
 
-⠀Initializes a class.
+⠀It's a class that simplifies working with the SQLAlchemy library. `__init__` initializes a class.
 
 ⠀Accepted arguments:
 - db_url (str) — a URL containing all the necessary parameters to connect to a DB
@@ -296,7 +296,76 @@ db.insert(User(u_id=903, username='penny'))
 
 <h2><p align="center">sqlite</p></h2>
 
-⠀Deprecated, use SQLAlchemy.
+<h3><p align="center">DB</p></h3>
+
+⠀It's a class to interact with a SQLite3 database via SQL queries. `__init__` initializes a class.
+
+⠀Accepted arguments:
+- database_file (str) — a path to the database
+- **kwargs — other arguments for connecting
+
+⠀Usage:
+```py
+import os
+
+from pretty_utils.databases.sqlite import DB
+
+db = DB(os.path.join('databases', 'database.db'))
+```
+
+<h3><p align="center">execute</p></h3>
+
+⠀Executes SQL queries.
+
+⠀Accepted arguments:
+- query (str) — a query
+- data (tuple) — a data for query
+- fetchone (bool) — if `True` uses `fetchone`, otherwise uses `fetchall` in SELECT queries
+- with_column_names (bool) — if `True` returns column names in SELECT queries (False)
+- return_class (bool) — if `True` returns dynamic class, otherwise returns tuple (True)
+
+⠀Usage:
+```py
+from pretty_utils.databases.sqlite import DB
+
+db = DB('database.db')
+db.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, u_id INTEGER, username TEXT)')
+db.execute('INSERT INTO users (u_id, username) VALUES (?, ?)', (33, 'username',))
+db.execute('INSERT INTO users (u_id, username) VALUES (?, ?)', (102, 'gok',))
+res = db.execute('SELECT * FROM users')
+print(res)
+# [data(id=1, u_id=33, username='username'), data(id=2, u_id=102, username='gok')]
+res = db.execute('SELECT * FROM users', return_class=False)
+print(res)
+# [(1, 33, 'username'), (2, 102, 'gok')]
+db.execute('UPDATE users SET username = ? WHERE u_id = ?', ('new_username', 33,))
+res = db.execute('SELECT * FROM users', fetchone=True)
+print(res)
+# data(id=1, u_id=33, username='new_username')
+```
+
+<h3><p align="center">dynamic_class</p></h3>
+
+⠀Dynamically creates a class for received data similar to the one in SQLAlchemy, but without explicitly specifying instance variables.
+
+⠀Accepted arguments:
+- class_name (str) — a class name
+- variables (list or tuple) — variables of the class
+- values (list or tuple) — values of the specified variables
+
+⠀Returns object — a created class.
+
+⠀Usage:
+```py
+from pretty_utils.databases.sqlite import dynamic_class
+
+print(dynamic_class('my_class', ('u_id', 'username'), (33, 'username')))
+# my_class(u_id=33, username='username')
+```
+
+<h3><p align="center">make_sql</p></h3>
+
+⠀Function was deprecated, use [DB class](#DB-2).
 
 
 
