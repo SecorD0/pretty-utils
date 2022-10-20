@@ -33,6 +33,8 @@ def unix_to_strtime(unix_time: int or float or str = None, utc_offset: Optional[
         unix_time = int(unix_time)
 
     if utc_offset is None:
+        strtime = datetime.fromtimestamp(unix_time)
+    elif utc_offset == 0:
         strtime = datetime.utcfromtimestamp(unix_time)
     else:
         strtime = datetime.utcfromtimestamp(unix_time).replace(tzinfo=timezone.utc).astimezone(
