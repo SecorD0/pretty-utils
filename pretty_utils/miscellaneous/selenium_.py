@@ -57,6 +57,17 @@ class Sel:
         """
         return WebDriverWait(self.browser, sec).until(EC.element_to_be_clickable((by, find_it)))
 
+    def wait_for_visibility(self, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
+        """
+        Waiting for an element to become visible.
+
+        :param str find_it: a string to search for the element
+        :param int sec: the element waiting time (10)
+        :param str by: find the element by ... (XPATH)
+        :return WebElement: the founded element
+        """
+        return WebDriverWait(self.browser, sec).until(EC.visibility_of_element_located((by, find_it)))
+
     def clear(self, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
         """
         Explicit waits of an element appearing and clear its contents.
