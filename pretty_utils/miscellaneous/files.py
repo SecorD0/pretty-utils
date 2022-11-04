@@ -2,8 +2,18 @@ import json
 import os
 import sys
 
+def join_path(path: str or tuple or list) -> str:
+    """
+    Join the path passed in the list or tuple.
 
-def touch(path: str, file: bool = False) -> bool:
+    :param str or tuple or list path: path to the object
+    :return str: the joined path
+    """
+    if isinstance(path, str):
+        return path
+    return os.path.join(*path)
+
+def touch(path: str or tuple or list, file: bool = False) -> bool:
     """
     Create an object (file or directory) if it doesn't exist.
 
@@ -11,6 +21,7 @@ def touch(path: str, file: bool = False) -> bool:
     :param bool file: is it a file?
     :return bool: True if the object was created
     """
+    path = join_path(path)
     if file:
         if not os.path.exists(path):
             with open(path, 'w') as f:
@@ -24,18 +35,19 @@ def touch(path: str, file: bool = False) -> bool:
     return False
 
 
-def write_json(path: str, obj: str or dict):
+def write_json(path: str or tuple or list, obj: str or dict):
     """
     Write Python list or dictionary to a JSON file.
 
     :param str path: path to the JSON file
     :param list or dict obj: the Python list or dictionary
     """
+    path = join_path(path)
     with open(path, 'w') as f:
         json.dump(obj, f)
 
 
-def read_lines(path: str, skip_empty_rows: bool = False) -> list:
+def read_lines(path: str or tuple or list, skip_empty_rows: bool = False) -> list:
     """
     Read a file and return a list of lines.
 
@@ -43,6 +55,7 @@ def read_lines(path: str, skip_empty_rows: bool = False) -> list:
     :param bool skip_empty_rows: if True it doesn't include empty rows to the list
     :return list: the list of lines
     """
+    path = join_path(path)
     with open(path) as f:
         lines = f.readlines()
 
@@ -53,13 +66,14 @@ def read_lines(path: str, skip_empty_rows: bool = False) -> list:
     return lines
 
 
-def read_json(path: str) -> list or dict:
+def read_json(path: str or tuple or list) -> list or dict:
     """
     Read a JSON file and return a Python list or dictionary.
 
     :param str path: path to the JSON file
     :return list or dict: the Python list or dictionary
     """
+    path = join_path(path)
     return json.load(open(path))
 
 
