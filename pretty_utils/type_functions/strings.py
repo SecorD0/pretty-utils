@@ -36,7 +36,7 @@ def del_ws(text: str) -> str:
     :param str text: a source text
     :return str: the text without whitespaces
     """
-    return text.replace(" ", "")
+    return text.replace(' ', '').replace('\t', '')
 
 
 def format_number(number: int or float) -> str:
