@@ -1,6 +1,8 @@
 import json
 import os
 import sys
+from typing import Optional
+
 
 def join_path(path: str or tuple or list) -> str:
     """
@@ -12,6 +14,7 @@ def join_path(path: str or tuple or list) -> str:
     if isinstance(path, str):
         return path
     return os.path.join(*path)
+
 
 def touch(path: str or tuple or list, file: bool = False) -> bool:
     """
@@ -35,16 +38,17 @@ def touch(path: str or tuple or list, file: bool = False) -> bool:
     return False
 
 
-def write_json(path: str or tuple or list, obj: str or dict):
+def write_json(path: str or tuple or list, obj: str or dict, indent: Optional[int] = None) -> None:
     """
     Write Python list or dictionary to a JSON file.
 
     :param str path: path to the JSON file
     :param list or dict obj: the Python list or dictionary
+    :param Optional[int] indent: the indent level
     """
     path = join_path(path)
     with open(path, 'w') as f:
-        json.dump(obj, f)
+        json.dump(obj, f, indent=indent)
 
 
 def read_lines(path: str or tuple or list, skip_empty_rows: bool = False) -> list:
