@@ -20,7 +20,7 @@ def touch(path: str or tuple or list, file: bool = False) -> bool:
     """
     Create an object (file or directory) if it doesn't exist.
 
-    :param str path: path to the object
+    :param str or tuple or list path: path to the object
     :param bool file: is it a file?
     :return bool: True if the object was created
     """
@@ -38,11 +38,11 @@ def touch(path: str or tuple or list, file: bool = False) -> bool:
     return False
 
 
-def write_json(path: str or tuple or list, obj: str or dict, indent: Optional[int] = None) -> None:
+def write_json(path: str or tuple or list, obj: list or dict, indent: Optional[int] = None) -> None:
     """
     Write Python list or dictionary to a JSON file.
 
-    :param str path: path to the JSON file
+    :param str or tuple or list path: path to the JSON file
     :param list or dict obj: the Python list or dictionary
     :param Optional[int] indent: the indent level
     """
@@ -55,7 +55,7 @@ def read_lines(path: str or tuple or list, skip_empty_rows: bool = False) -> lis
     """
     Read a file and return a list of lines.
 
-    :param str path: path to the file
+    :param str or tuple or list path: path to the file
     :param bool skip_empty_rows: if True it doesn't include empty rows to the list
     :return list: the list of lines
     """
@@ -74,7 +74,7 @@ def read_json(path: str or tuple or list) -> list or dict:
     """
     Read a JSON file and return a Python list or dictionary.
 
-    :param str path: path to the JSON file
+    :param str or tuple or list path: path to the JSON file
     :return list or dict: the Python list or dictionary
     """
     path = join_path(path)

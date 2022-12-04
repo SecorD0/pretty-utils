@@ -379,12 +379,36 @@ print(dynamic_class('my_class', ('u_id', 'username'), (33, 'username')))
 
 ⠀Functions for working with files.
 
+<h3><p align="center">join_path</p></h3>
+
+⠀Join the path passed in the list or tuple.
+
+⠀Accepted arguments:
+- path (str or tuple or list) — path to the object
+
+⠀Returns str — the joined path.
+
+⠀Usage:
+```py
+from pretty_utils.miscellaneous.files import join_path
+
+path = join_path('data/images/1.png')
+print(path)
+# data/images/1.png
+path = join_path(('data', 'images', '1.png'))
+print(path)
+# data\images\1.png
+path = join_path(['data', 'images', '1.png'])
+print(path)
+# data\images\1.png
+```
+
 <h3><p align="center">touch</p></h3>
 
 ⠀Create an object (file or directory) if it doesn't exist.
 
 ⠀Accepted arguments:
-- path (str) — path to the object
+- path (str or tuple or list) — path to the object
 - file (bool) — is it a file? (false)
 
 ⠀Returns bool — True if the object was created.
@@ -409,15 +433,16 @@ print(resp)
 ⠀Write Python list or dictionary to a JSON file.
 
 ⠀Accepted arguments:
-- path (str) — path to the JSON file
+- path (str or tuple or list) — path to the JSON file
 - obj (list or dict) — the Python list or dictionary
+- indent (int) — the indent level
 
 ⠀Usage:
 ```py
 from pretty_utils.miscellaneous.files import write_json
 
 users = [{'id': 33, 'username': 'username'}, {'id': 102, 'username': 'gok'}]
-write_json('users.json', users)
+write_json('users.json', users, 2)
 ```
 
 <h3><p align="center">read_lines</p></h3>
@@ -425,7 +450,7 @@ write_json('users.json', users)
 ⠀Read a file and return a list of lines.
 
 ⠀Accepted arguments:
-- path (str) — path to the file
+- path (str or tuple or list) — path to the file
 - skip_empty_rows (bool) — if True it doesn't include empty rows to the list
 
 ⠀Returns list — the list of lines.
@@ -451,7 +476,7 @@ print(lines)
 ⠀Read a JSON file and return a Python list or dictionary.
 
 ⠀Accepted arguments:
-- path (str) — path to the JSON file
+- path (str or tuple or list) — path to the JSON file
 
 ⠀Returns list or dict — the Python list or dictionary.
 
@@ -495,7 +520,7 @@ print(absolute_path)
 ⠀Generate a username.
 
 ⠀Accepted arguments:
-- len (str) — length of a username (9)
+- len (int) — length of a username (9)
 - capital (bool) — capitalize the first letter (False)
 
 ⠀Returns str — the generated username.
@@ -522,7 +547,7 @@ print(username)
 ⠀Generate a password.
 
 ⠀Accepted arguments:
-- len (str) — length of a password (16)
+- len (int) — length of a password (16)
 - use_capitals (bool) — use capitals letters (True)
 - use_digits (bool) — use digits (True)
 - use_specials (bool) — use special symbols (False)
@@ -544,6 +569,40 @@ print(password)
 password = generators.password(12, use_specials=True)
 print(password)
 # Lx1M7ph*Ytu=
+```
+
+
+<h2><p align="center">inputting</p></h2>
+
+⠀Functions for data inputting.
+
+<h3><p align="center">timeout_input</p></h3>
+
+⠀Ask a user to enter a string, and if he doesn't do so in a certain amount of time, return the default value. Works only in `if __name__ == '__main__'` construction.
+
+⠀Accepted arguments:
+- prompt (str) — a prompt that will be displayed before the input request
+- timeout (int or float) — a timeout after which the default value will be returned (60)
+- default_value (str) — a default value that will be returned after the timeout expires
+
+⠀Returns str — the inputted or default value.
+
+⠀Usage:
+```py
+from pretty_utils.miscellaneous.inputting import timeout_input
+
+if __name__ == '__main__':
+    name = timeout_input('Enter your name: ', default_value='John')  # Input 'Michael'
+    print(f'Your name is {name}.\n')
+    # Your name is Michael.
+
+    print('''Select the action:
+1) Do nothing;
+2) Causing rain;
+3) Causing an earthquake.''')
+    action = timeout_input('> ', 5, '1')  # Just wait
+    print(f'{name}, you select {action}!')
+    # Michael, you select 1!
 ```
 
 
@@ -637,6 +696,31 @@ browser = webdriver.Chrome()
 sel = Sel(browser)
 browser.get('https://www.google.com/')
 element = sel.wait_for_clickability('/html/body/div[1]/div[5]/div[2]/div[3]/span/span/g-popup/div[1]')
+print(element)
+# <selenium.webdriver.remote.webelement.WebElement (session="...", element="...")>
+browser.quit()
+```
+
+<h3><p align="center">wait_for_visibility</p></h3>
+
+⠀Waiting for an element to become visible.
+
+⠀Accepted arguments:
+- find_it (str) — a string to search for the element
+- sec (int) — the element waiting time (10)
+- by (str) — find the element by ... (XPATH)
+
+⠀Returns WebElement — the founded element.
+
+⠀Usage:
+```py
+from pretty_utils.miscellaneous.selenium_ import Sel
+from selenium import webdriver
+
+browser = webdriver.Chrome()
+sel = Sel(browser)
+browser.get('https://www.google.com/')
+element = sel.wait_for_visibility('/html/body/div[1]/div[5]/div[2]/div[3]/span/span/g-popup/div[1]')
 print(element)
 # <selenium.webdriver.remote.webelement.WebElement (session="...", element="...")>
 browser.quit()
@@ -870,6 +954,40 @@ print(randbool())
 # True
 print(randbool())
 # False
+```
+
+
+<h2><p align="center">classes</p></h2>
+
+⠀Functions for working with class data type.
+
+<h3><p align="center">AutoRepr</p></h3>
+
+⠀Contains a `__repr__` function that automatically builds the output of a class using all its variables.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.classes import AutoRepr
+
+
+class UnreadablePerson:
+    def __init__(self, name: str, age: int) -> None:
+        self.name = name
+        self.age = age
+
+
+class ReadablePerson(AutoRepr):
+    def __init__(self, name: str, age: int) -> None:
+        self.name = name
+        self.age = age
+
+
+person = UnreadablePerson(name='John', age=32)
+print(person)
+# <__main__.UnreadablePerson object at 0x...>
+person = ReadablePerson(name='John', age=32)
+print(person)
+# ReadablePerson(name='John', age=32)
 ```
 
 
