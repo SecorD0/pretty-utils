@@ -64,8 +64,8 @@ def read_lines(path: str or tuple or list, skip_empty_rows: bool = False) -> lis
         lines = f.readlines()
 
     lines = [line.rstrip() for line in lines]
-    if skip_empty_rows and '' in lines:
-        lines.remove('')
+    if skip_empty_rows:
+        lines = list(filter(lambda a: a, lines))
 
     return lines
 
