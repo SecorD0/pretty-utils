@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 def text_between(text: str, begin: str = '', end: str = '') -> str:
     """
     Extract a text between strings.
@@ -39,11 +42,25 @@ def del_ws(text: str) -> str:
     return text.replace(' ', '').replace('\t', '')
 
 
-def format_number(number: int or float) -> str:
+def format_number(number: int or float, decimals: Optional[int] = None, thousands_separator: str = ' ') -> str:
     """
-    Return formatted number like 3 392 233.9420.
+    Return formatted number like 3 392 233,9420.
 
     :param int or float number: a number for formatting
+    :param Optional[int] decimals: how many decimal places to round a number
+    :param str thousands_separator: thousands separator
     :return str: the formatted number
     """
-    return '{0:,}'.format(number).replace(',', ' ')
+    if decimals is not None:
+        number = round(number, decimals)
+
+    formatted_number = '{0:,}'.format(number)
+    if thousands_separator == '.':
+        formatted_number = formatted_number.replace(',', ' ').replace('.', ',').replace(' ', '.')
+
+    else:
+        formatted_number = formatted_number.replace(',', thousands_separator)
+        if thousands_separator == ' ':
+            formatted_number = formatted_number.replace('.', ',')
+
+    return formatted_number
