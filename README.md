@@ -37,6 +37,8 @@
     - [generators](#generators)
       - [username](#username)
       - [password](#password)
+    - [inputting](#inputting)
+      - [timeout_input](#timeout_input)
     - [selenium_](#selenium_)
       - [Sel](#Sel)
       - [get_element](#get_element)
