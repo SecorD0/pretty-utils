@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 
 
 def text_between(text: str, begin: str = '', end: str = '') -> str:
@@ -42,11 +42,11 @@ def del_ws(text: str) -> str:
     return text.replace(' ', '').replace('\t', '')
 
 
-def format_number(number: int or float, decimals: Optional[int] = None, thousands_separator: str = ' ') -> str:
+def format_number(number: Union[int, float], decimals: Optional[int] = None, thousands_separator: str = ' ') -> str:
     """
     Return formatted number like 3 392 233,9420.
 
-    :param int or float number: a number for formatting
+    :param Union[int, float] number: a number for formatting
     :param Optional[int] decimals: how many decimal places to round a number
     :param str thousands_separator: thousands separator
     :return str: the formatted number

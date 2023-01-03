@@ -1,5 +1,5 @@
 import sqlite3
-from typing import Optional
+from typing import Optional, Union
 
 
 class DBException(Exception):
@@ -88,14 +88,14 @@ class DB:
                 raise DBException(f'\n{str(e)}')
 
 
-def dynamic_class(class_name: str, variables: list or tuple, values: list or tuple) -> object:
+def dynamic_class(class_name: str, variables: Union[list, tuple], values: Union[list, tuple]) -> object:
     """
     Dynamically creates a class for received data similar to the one in SQLAlchemy,
     but without explicitly specifying instance variables.
 
     :param str class_name: a class name
-    :param list or tuple variables: variables of the class
-    :param list or tuple values: values of the specified variables
+    :param Union[list, tuple] variables: variables of the class
+    :param Union[list, tuple] values: values of the specified variables
     :return object: a created class
     """
     class_dict = dict(zip(variables, values))

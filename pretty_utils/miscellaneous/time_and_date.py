@@ -1,6 +1,6 @@
 import time
 from datetime import datetime, timezone, timedelta
-from typing import Optional
+from typing import Optional, Union
 
 
 def strtime_to_unix(strtime: str, utc_offset: int = 0, format: str = '%d.%m.%Y %H:%M') -> int:
@@ -16,14 +16,14 @@ def strtime_to_unix(strtime: str, utc_offset: int = 0, format: str = '%d.%m.%Y %
         tzinfo=timezone(timedelta(seconds=utc_offset * 60 * 60))).timestamp())
 
 
-def unix_to_strtime(unix_time: int or float or str = None, utc_offset: Optional[int] = None,
-                    format: str = '%d.%m.%Y %H:%M') -> str:
+def unix_to_strtime(unix_time: Union[int, float, str] = None, utc_offset: Optional[int] = None,
+                    format: str = '%d.%m.%Y %H:%M:%S') -> str:
     """
     Convert unix to string time. In particular return the current time.
 
-    :param int or float or str unix_time: a unix time (current)
+    :param Union[int, float, str] unix_time: a unix time (current)
     :param int utc_offset: hour offset from UTC (None)
-    :param str format: format for string time output (%d.%m.%Y %H:%M)
+    :param str format: format for string time output (%d.%m.%Y %H:%M:%S)
     :return str: the string time
     """
     if not unix_time:

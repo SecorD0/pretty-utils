@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Union
 
 from sqlalchemy import create_engine
 from sqlalchemy.exc import DatabaseError
@@ -106,11 +106,11 @@ class DB:
         except DatabaseError:
             self.s.rollback()
 
-    def insert(self, row: object or List[object]):
+    def insert(self, row: Union[object, List[object]]):
         """
         Inserts rows.
 
-        :param row: an ORM entity or list of entities
+        :param Union[object, List[object]] row: an ORM entity or list of entities
         """
         if isinstance(row, list):
             self.s.add_all(row)

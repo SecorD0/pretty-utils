@@ -1,14 +1,14 @@
 import json
 import os
 import sys
-from typing import Optional
+from typing import Optional, Union
 
 
-def join_path(path: str or tuple or list) -> str:
+def join_path(path: Union[str, tuple, list]) -> str:
     """
     Join the path passed in the list or tuple.
 
-    :param str or tuple or list path: path to the object
+    :param Union[str, tuple, list] path: path to the object
     :return str: the joined path
     """
     if isinstance(path, str):
@@ -16,11 +16,11 @@ def join_path(path: str or tuple or list) -> str:
     return os.path.join(*path)
 
 
-def touch(path: str or tuple or list, file: bool = False) -> bool:
+def touch(path: Union[str, tuple, list], file: bool = False) -> bool:
     """
     Create an object (file or directory) if it doesn't exist.
 
-    :param str or tuple or list path: path to the object
+    :param Union[str, tuple, list] path: path to the object
     :param bool file: is it a file?
     :return bool: True if the object was created
     """
@@ -38,12 +38,12 @@ def touch(path: str or tuple or list, file: bool = False) -> bool:
     return False
 
 
-def write_json(path: str or tuple or list, obj: list or dict, indent: Optional[int] = None) -> None:
+def write_json(path: Union[str, tuple, list], obj: Union[list, dict], indent: Optional[int] = None) -> None:
     """
     Write Python list or dictionary to a JSON file.
 
-    :param str or tuple or list path: path to the JSON file
-    :param list or dict obj: the Python list or dictionary
+    :param Union[str, tuple, list] path: path to the JSON file
+    :param Union[list, dict] obj: the Python list or dictionary
     :param Optional[int] indent: the indent level
     """
     path = join_path(path)
@@ -51,11 +51,11 @@ def write_json(path: str or tuple or list, obj: list or dict, indent: Optional[i
         json.dump(obj, f, indent=indent)
 
 
-def read_lines(path: str or tuple or list, skip_empty_rows: bool = False) -> list:
+def read_lines(path: Union[str, tuple, list], skip_empty_rows: bool = False) -> list:
     """
     Read a file and return a list of lines.
 
-    :param str or tuple or list path: path to the file
+    :param Union[str, tuple, list] path: path to the file
     :param bool skip_empty_rows: if True it doesn't include empty rows to the list
     :return list: the list of lines
     """
@@ -70,12 +70,12 @@ def read_lines(path: str or tuple or list, skip_empty_rows: bool = False) -> lis
     return lines
 
 
-def read_json(path: str or tuple or list) -> list or dict:
+def read_json(path: Union[str, tuple, list]) -> Union[list, dict]:
     """
     Read a JSON file and return a Python list or dictionary.
 
-    :param str or tuple or list path: path to the JSON file
-    :return list or dict: the Python list or dictionary
+    :param Union[str, tuple, list] path: path to the JSON file
+    :return Union[list, dict]: the Python list or dictionary
     """
     path = join_path(path)
     return json.load(open(path))

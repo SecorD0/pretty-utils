@@ -112,11 +112,11 @@ pip install --force-reinstall git+https://github.com/SecorD0/pretty-utils
 ⠀It's a class to interact with a MySQL database via SQL queries. `__init__` initializes a class.
 
 ⠀Accepted arguments:
-- database (str) — a database name
-- host (str) — IP:port for connection to DB
-- user (str) — a username for connection
-- passwd (str) — a password for connection
-- **kwargs — other arguments for connecting
+- `database (str)` — a database name
+- `host (str)` — IP:port for connection to DB
+- `user (str)` — a username for connection
+- `passwd (str)` — a password for connection
+- `**kwargs` — other arguments for connecting
 
 ⠀Usage:
 ```py
@@ -132,9 +132,9 @@ db = DB(database='bot', passwd=str(os.getenv('DB_PASSWORD')))
 ⠀Executes SQL queries.
 
 ⠀Accepted arguments:
-- query (str) — a query
-- data (tuple) — a data for query
-- fetchone (bool) — if `True` uses `fetchone`, otherwise uses `fetchall` in SELECT queries
+- `query (str)` — a query
+- `data (tuple)` — a data for query
+- `fetchone (bool)` — if `True` uses `fetchone`, otherwise uses `fetchall` in SELECT queries
 
 ⠀Usage:
 ```py
@@ -163,8 +163,8 @@ print(res)
 ⠀It's a class that simplifies working with the SQLAlchemy library. `__init__` initializes a class.
 
 ⠀Accepted arguments:
-- db_url (str) — a URL containing all the necessary parameters to connect to a DB
-- **kwargs — other arguments for connecting
+- `db_url (str)` — a URL containing all the necessary parameters to connect to a DB
+- `**kwargs` — other arguments for connecting
 
 ⠀Usage:
 ```py
@@ -178,14 +178,14 @@ db = DB('sqlite:///users.db', pool_recycle=3600, connect_args={'check_same_threa
 ⠀Creates a database if it doesn't exist. Used automatically during initialization.
 
 ⠀Accepted arguments:
-- database (str) — a database name
+- `database (str)` — a database name
 
 <h3><p align="center">create_tables</p></h3>
 
 ⠀Creates tables.
 
 ⠀Accepted arguments:
-- base — a base class for declarative class definitions
+- `base` — a base class for declarative class definitions
 
 ⠀Usage:
 ```py
@@ -213,10 +213,10 @@ db.create_tables(Base)
 ⠀Fetches all rows.
 
 ⠀Accepted arguments:
-- entities — an ORM entity
-- criterion — criterion for rows filtering
+- `entities` — an ORM entity
+- `criterion` — criterion for rows filtering
 
-⠀Returns list — the list of rows.
+⠀Returns `list` — the list of rows.
 
 ⠀Usage:
 ```py
@@ -232,11 +232,11 @@ print(users)
 ⠀Fetches one row.
 
 ⠀Accepted arguments:
-- entities — an ORM entity
-- criterion — criterion for rows filtering
-- from_the_end — get the row from the end
+- `entities` — an ORM entity
+- `criterion` — criterion for rows filtering
+- `from_the_end` — get the row from the end
 
-⠀Returns list — found row or None.
+⠀Returns `list` — found row or None.
 
 ⠀Usage:
 ```py
@@ -252,8 +252,8 @@ print(user)
 ⠀Executes SQL query.
 
 ⠀Accepted arguments:
-- query — the query
-- args — any additional arguments
+- `query` — the query
+- `args` — any additional arguments
 
 ⠀Usage:
 ```py
@@ -283,7 +283,7 @@ db.commit()
 ⠀Inserts rows.
 
 ⠀Accepted arguments:
-- row — an ORM entity or list of entities
+- `row` — an ORM entity or list of entities
 
 ⠀Usage:
 ```py
@@ -303,8 +303,8 @@ db.insert(User(u_id=903, username='penny'))
 ⠀It's a class to interact with a SQLite3 database via SQL queries. `__init__` initializes a class.
 
 ⠀Accepted arguments:
-- database_file (str) — a path to the database
-- **kwargs — other arguments for connecting
+- `database_file (str)` — a path to the database
+- `**kwargs` — other arguments for connecting
 
 ⠀Usage:
 ```py
@@ -320,11 +320,11 @@ db = DB(os.path.join('databases', 'database.db'))
 ⠀Executes SQL queries.
 
 ⠀Accepted arguments:
-- query (str) — a query
-- data (tuple) — a data for query
-- fetchone (bool) — if `True` uses `fetchone`, otherwise uses `fetchall` in SELECT queries
-- with_column_names (bool) — if `True` returns column names in SELECT queries (False)
-- return_class (bool) — if `True` returns dynamic class, otherwise returns tuple (True)
+- `query (str)` — a query
+- `data (tuple)` — a data for query
+- `fetchone (bool)` — if `True` uses `fetchone`, otherwise uses `fetchall` in SELECT queries
+- `with_column_names (bool)` — if `True` returns column names in SELECT queries (False)
+- `return_class (bool)` — if `True` returns dynamic class, otherwise returns tuple (True)
 
 ⠀Usage:
 ```py
@@ -351,11 +351,11 @@ print(res)
 ⠀Dynamically creates a class for received data similar to the one in SQLAlchemy, but without explicitly specifying instance variables.
 
 ⠀Accepted arguments:
-- class_name (str) — a class name
-- variables (list or tuple) — variables of the class
-- values (list or tuple) — values of the specified variables
+- `class_name (str)` — a class name
+- `variables (Union[list, tuple])` — variables of the class
+- `values (Union[list, tuple])` — values of the specified variables
 
-⠀Returns object — a created class.
+⠀Returns `object` — a created class.
 
 ⠀Usage:
 ```py
@@ -386,9 +386,9 @@ print(dynamic_class('my_class', ('u_id', 'username'), (33, 'username')))
 ⠀Join the path passed in the list or tuple.
 
 ⠀Accepted arguments:
-- path (str or tuple or list) — path to the object
+- `path (Union[str, tuple, list])` — path to the object
 
-⠀Returns str — the joined path.
+⠀Returns `str` — the joined path.
 
 ⠀Usage:
 ```py
@@ -410,10 +410,10 @@ print(path)
 ⠀Create an object (file or directory) if it doesn't exist.
 
 ⠀Accepted arguments:
-- path (str or tuple or list) — path to the object
-- file (bool) — is it a file? (false)
+- `path (Union[str, tuple, list])` — path to the object
+- `file (bool)` — is it a file? (false)
 
-⠀Returns bool — True if the object was created.
+⠀Returns `bool` — True if the object was created.
 
 ⠀Usage:
 ```py
@@ -435,9 +435,9 @@ print(resp)
 ⠀Write Python list or dictionary to a JSON file.
 
 ⠀Accepted arguments:
-- path (str or tuple or list) — path to the JSON file
-- obj (list or dict) — the Python list or dictionary
-- indent (int) — the indent level
+- `path (Union[str, tuple, list])` — path to the JSON file
+- `obj (Union[list, dict])` — the Python list or dictionary
+- `indent (int)` — the indent level
 
 ⠀Usage:
 ```py
@@ -452,10 +452,10 @@ write_json('users.json', users, 2)
 ⠀Read a file and return a list of lines.
 
 ⠀Accepted arguments:
-- path (str or tuple or list) — path to the file
-- skip_empty_rows (bool) — if True it doesn't include empty rows to the list
+- `path (Union[str, tuple, list])` — path to the file
+- `skip_empty_rows (bool)` — if True it doesn't include empty rows to the list
 
-⠀Returns list — the list of lines.
+⠀Returns `list` — the list of lines.
 
 ⠀Usage:
 ```py
@@ -478,9 +478,9 @@ print(lines)
 ⠀Read a JSON file and return a Python list or dictionary.
 
 ⠀Accepted arguments:
-- path (str or tuple or list) — path to the JSON file
+- `path (Union[str, tuple, list])` — path to the JSON file
 
-⠀Returns list or dict — the Python list or dictionary.
+⠀Returns `Union[list, dict]` — the Python list or dictionary.
 
 ⠀Usage:
 ```py
@@ -499,9 +499,9 @@ print(resp)
 ⠀Get absolute path to resource, works for dev and for PyInstaller.
 
 ⠀Accepted arguments:
-- relative_path (str) — a relative path to the resource
+- `relative_path (str)` — a relative path to the resource
 
-⠀Returns str — an absolute path to the resource.
+⠀Returns `str` — an absolute path to the resource.
 
 ⠀Usage:
 ```py
@@ -522,10 +522,10 @@ print(absolute_path)
 ⠀Generate a username.
 
 ⠀Accepted arguments:
-- len (int) — length of a username (9)
-- capital (bool) — capitalize the first letter (False)
+- `len (int)` — length of a username (9)
+- `capital (bool)` — capitalize the first letter (False)
 
-⠀Returns str — the generated username.
+⠀Returns `str` — the generated username.
 
 ⠀Usage:
 ```py
@@ -549,12 +549,12 @@ print(username)
 ⠀Generate a password.
 
 ⠀Accepted arguments:
-- len (int) — length of a password (16)
-- use_capitals (bool) — use capitals letters (True)
-- use_digits (bool) — use digits (True)
-- use_specials (bool) — use special symbols (False)
+- `len (int)` — length of a password (16)
+- `use_capitals (bool)` — use capitals letters (True)
+- `use_digits (bool)` — use digits (True)
+- `use_specials (bool)` — use special symbols (False)
 
-⠀Returns str — the generated password.
+⠀Returns `str` — the generated password.
 
 ⠀Usage:
 ```py
@@ -583,11 +583,11 @@ print(password)
 ⠀Ask a user to enter a string, and if he doesn't do so in a certain amount of time, return the default value. Works only in `if __name__ == '__main__'` construction.
 
 ⠀Accepted arguments:
-- prompt (str) — a prompt that will be displayed before the input request
-- timeout (int or float) — a timeout after which the default value will be returned (60)
-- default_value (str) — a default value that will be returned after the timeout expires
+- `prompt (str)` — a prompt that will be displayed before the input request
+- `timeout (Union[int, float])` — a timeout after which the default value will be returned (60)
+- `default_value (str)` — a default value that will be returned after the timeout expires
 
-⠀Returns str — the inputted or default value.
+⠀Returns `str` — the inputted or default value.
 
 ⠀Usage:
 ```py
@@ -617,7 +617,7 @@ if __name__ == '__main__':
 ⠀Initializes a class.
 
 ⠀Accepted arguments:
-- browser (webdriver) — instance of WebDriver (Ie, Firefox, Chrome or Remote)
+- `browser (webdriver)` — instance of WebDriver (Ie, Firefox, Chrome or Remote)
 
 ⠀Usage:
 ```py
@@ -633,11 +633,11 @@ sel = Sel(browser)
 ⠀Explicit waits of an element appearing.
 
 ⠀Accepted arguments:
-- find_it (str) — a string to search for the element
-- sec (int) — the element waiting time (10)
-- by (str) — find the element by ... (XPATH)
+- `find_it (str)` — a string to search for the element
+- `sec (int)` — the element waiting time (10)
+- `by (str)` — find the element by ... (XPATH)
 
-⠀Returns WebElement — the founded element.
+⠀Returns `WebElement` — the founded element.
 
 ⠀Usage:
 ```py
@@ -658,11 +658,11 @@ browser.quit()
 ⠀Explicit waits of an element appearing and get its text.
 
 ⠀Accepted arguments:
-- find_it (str) — a string to search for the element
-- sec (int) — the element waiting time (10)
-- by (str) — find the element by ... (XPATH)
+- `find_it (str)` — a string to search for the element
+- `sec (int)` — the element waiting time (10)
+- `by (str)` — find the element by ... (XPATH)
 
-⠀Returns str — the parsed text.
+⠀Returns `str` — the parsed text.
 
 ⠀Usage:
 ```py
@@ -683,11 +683,11 @@ browser.quit()
 ⠀Waiting for an element to become clickable.
 
 ⠀Accepted arguments:
-- find_it (str) — a string to search for the element
-- sec (int) — the element waiting time (10)
-- by (str) — find the element by ... (XPATH)
+- `find_it (str)` — a string to search for the element
+- `sec (int)` — the element waiting time (10)
+- `by (str)` — find the element by ... (XPATH)
 
-⠀Returns WebElement — the founded element.
+⠀Returns `WebElement` — the founded element.
 
 ⠀Usage:
 ```py
@@ -708,11 +708,11 @@ browser.quit()
 ⠀Waiting for an element to become visible.
 
 ⠀Accepted arguments:
-- find_it (str) — a string to search for the element
-- sec (int) — the element waiting time (10)
-- by (str) — find the element by ... (XPATH)
+- `find_it (str)` — a string to search for the element
+- `sec (int)` — the element waiting time (10)
+- `by (str)` — find the element by ... (XPATH)
 
-⠀Returns WebElement — the founded element.
+⠀Returns `WebElement` — the founded element.
 
 ⠀Usage:
 ```py
@@ -733,11 +733,11 @@ browser.quit()
 ⠀Explicit waits of an element appearing and clear its contents.
 
 ⠀Accepted arguments:
-- find_it (str) — a string to search for the element
-- sec (int) — the element waiting time (10)
-- by (str) — find the element by ... (XPATH)
+- `find_it (str)` — a string to search for the element
+- `sec (int)` — the element waiting time (10)
+- `by (str)` — find the element by ... (XPATH)
 
-⠀Returns WebElement — the founded element.
+⠀Returns `WebElement` — the founded element.
 
 ⠀Usage:
 ```py
@@ -762,13 +762,13 @@ browser.quit()
 ⠀Explicit waits of an element appearing and write a text to it.
 
 ⠀Accepted arguments:
-- find_it (str) — a string to search for the element
-- text (str) — a text to write
-- sec (int) — the element waiting time (10)
-- by (str) — find the element by ... (XPATH)
-- clear (bool) — clear the element before writing (True)
+- `find_it (str)` — a string to search for the element
+- `text (str)` — a text to write
+- `sec (int)` — the element waiting time (10)
+- `by (str)` — find the element by ... (XPATH)
+- `clear (bool)` — clear the element before writing (True)
 
-⠀Returns WebElement — the founded element.
+⠀Returns `WebElement` — the founded element.
 
 ⠀Usage:
 ```py
@@ -794,11 +794,11 @@ browser.quit()
 ⠀Explicit waits of an element appearing and click it.
 
 ⠀Accepted arguments:
-- find_it (str) — a string to search for the element
-- sec (int) — the element waiting time (10)
-- by (str) — find the element by ... (XPATH)
+- `find_it (str)` — a string to search for the element
+- `sec (int)` — the element waiting time (10)
+- `by (str)` — find the element by ... (XPATH)
 
-⠀Returns WebElement — the founded element.
+⠀Returns `WebElement` — the founded element.
 
 ⠀Usage:
 ```py
@@ -824,11 +824,11 @@ browser.quit()
 ⠀Explicit waits of an element appearing and click it using JS script. Use it if simple click has no effect.
 
 ⠀Accepted arguments:
-- find_it (str) — a string to search for the element
-- sec (int) — the element waiting time (10)
-- by (str) — find the element by ... (XPATH)
+- `find_it (str)` — a string to search for the element
+- `sec (int)` — the element waiting time (10)
+- `by (str)` — find the element by ... (XPATH)
 
-⠀Returns WebElement — the founded element.
+⠀Returns `WebElement` — the founded element.
 
 ⠀Usage similar to that in the [click](#click) function.
 
@@ -837,11 +837,11 @@ browser.quit()
 ⠀Explicit waits of an element appearing and click it when clickable.
 
 ⠀Accepted arguments:
-- find_it (str) — a string to search for the element
-- sec (int) — the element waiting time (10)
-- by (str) — find the element by ... (XPATH)
+- `find_it (str)` — a string to search for the element
+- `sec (int)` — the element waiting time (10)
+- `by (str)` — find the element by ... (XPATH)
 
-⠀Returns WebElement — the founded element.
+⠀Returns `WebElement` — the founded element.
 
 ⠀Usage similar to that in the [click](#click) function.
 
@@ -850,13 +850,13 @@ browser.quit()
 ⠀Explicit waits of an element appearing and click it via coordinates.
 
 ⠀Accepted arguments:
-- find_it (str or WebElement) — a string or WebElement to interact
-- sec (int) — the element waiting time (10)
-- by (str) — find the element by ... (XPATH)
-- x_off (int) — x coordinate (1)
-- y_off (int) — y coordinate (1)
+- `find_it (Union[str, WebElement])` — a string or WebElement to interact
+- `sec (int)` — the element waiting time (10)
+- `by (str)` — find the element by ... (XPATH)
+- `x_off (int)` — x coordinate (1)
+- `y_off (int)` — y coordinate (1)
 
-⠀Returns WebElement — the founded element.
+⠀Returns `WebElement` — the founded element.
 
 ⠀Usage:
 ```py
@@ -887,11 +887,11 @@ browser.quit()
 ⠀Convert string time to unix.
 
 ⠀Accepted arguments:
-- strtime (str) — a string time
-- utc_offset (int) — hour offset from UTC (0)
-- format (str) — format for string time parsing (%d.%m.%Y %H:%M)
+- `strtime (str)` — a string time
+- `utc_offset (int)` — hour offset from UTC (0)
+- `format (str)` — format for string time parsing (%d.%m.%Y %H:%M)
 
-⠀Returns int — the unix time.
+⠀Returns `int` — the unix time.
 
 ⠀Usage:
 ```py
@@ -912,11 +912,11 @@ print(strtime_to_unix(str_time, 3))  # 09:35 UTC
 ⠀Convert unix to string time. In particular return the current time.
 
 ⠀Accepted arguments:
-- strtime (int or float or str) — a unix time (current)
-- utc_offset (int) — hour offset from UTC (None)
-- format (str) — format for string time output (%d.%m.%Y %H:%M)
+- `strtime (Union[int, float, str])` — a unix time (current)
+- `utc_offset (int)` — hour offset from UTC (None)
+- `format (str)` — format for string time output (%d.%m.%Y %H:%M)
 
-⠀Returns str — the string time.
+⠀Returns `str` — the string time.
 
 ⠀Usage:
 ```py
@@ -1002,11 +1002,11 @@ print(person)
 ⠀Return a random float from the range.
 
 ⠀Accepted arguments:
-- from_ (int or float) — the minimum value
-- to_ (int or float) — the maximum value
-- step (int or float) — the step size (0.1)
+- `from_ (Union[int, float])` — the minimum value
+- `to_ (Union[int, float])` — the maximum value
+- `step (Union[int, float])` — the step size (calculated based on the number of decimal places)
 
-⠀Returns float — the random float.
+⠀Returns `float` — the random float.
 
 ⠀Usage:
 ```py
@@ -1014,6 +1014,9 @@ from pretty_utils.type_functions.floats import randfloat
 
 print(randfloat(5.3, 6.2))
 # 5.3
+
+print(randfloat(1.05, 1.1))
+# 1.07
 
 print(randfloat(0.6, 1.7, 0.3))
 # 1.5
@@ -1027,11 +1030,11 @@ print(randfloat(0.6, 0.7, 0.02))
 ⠀Return a float range.
 
 ⠀Accepted arguments:
-- from_ (int or float) — a range start value
-- to_ (int or float) — the range stop value, not included
-- step (int or float) — the step size (0.1)
+- `from_ (Union[int, float])` — a range start value
+- `to_ (Union[int, float])` — the range stop value, not included
+- `step (Union[int, float])` — the step size (calculated based on the number of decimal places)
 
-⠀Returns list — the range list.
+⠀Returns `list` — the range list.
 
 ⠀Usage:
 ```py
@@ -1039,6 +1042,9 @@ from pretty_utils.type_functions.floats import float_range
 
 print(float_range(5.3, 6.2))
 # [5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 5.9, 6.0, 6.1]
+
+print(float_range(1.05, 1.1))
+# [1.05, 1.06, 1.07, 1.08, 1.09]
 
 print(float_range(0.6, 1.7, 0.3))
 # [0.6, 0.9, 1.2, 1.5]
@@ -1059,11 +1065,11 @@ print(float_range(7.25, 6.91, -0.05))
 ⠀Split a list to several lists.
 
 ⠀Accepted arguments:
-- s_list (list) — a list to split
-- n (int) — split the list into parts of N elements (100)
-- parts (bool) — split the list into N parts (False)
+- `s_list (list)` — a list to split
+- `n (int)` — split the list into parts of N elements (100)
+- `parts (bool)` — split the list into N parts (False)
 
-⠀Returns list — the split list.
+⠀Returns `list` — the split list.
 
 ⠀Usage:
 ```py
@@ -1090,9 +1096,9 @@ for sl in split_list(l, 2, True):
 ⠀Replace all None in a list with 0.
 
 ⠀Accepted arguments:
-- r_list (list) — a list to replace
+- `r_list (list)` — a list to replace
 
-⠀Returns list — the processed list.
+⠀Returns `list` — the processed list.
 
 ⠀Usage:
 ```py
@@ -1112,11 +1118,11 @@ print(replace_to_null([22, None, 84, None, None, 1, 0]))
 ⠀Extract a text between strings.
 
 ⠀Accepted arguments:
-- text (str) — a source text
-- begin (str) — a string from the end of which to start the extraction
-- end (str) — a string at the beginning of which the extraction should end
+- `text (str)` — a source text
+- `begin (str)` — a string from the end of which to start the extraction
+- `end (str)` — a string at the beginning of which the extraction should end
 
-⠀Returns str — the extracted text or empty string if nothing is found.
+⠀Returns `str` — the extracted text or empty string if nothing is found.
 
 ⠀Usage:
 ```py
@@ -1157,9 +1163,9 @@ print(text_between(text, 'you ', ' you'))
 ⠀Delete whitespaces.
 
 ⠀Accepted arguments:
-- text (str) — a source text
+- `text (str)` — a source text
 
-⠀Returns str — the text without whitespaces.
+⠀Returns `str` — the text without whitespaces.
 
 ⠀Usage:
 ```py
@@ -1176,9 +1182,9 @@ print(del_ws(text))
 ⠀Return formatted number like 3 392 233.9420.
 
 ⠀Accepted arguments:
-- number (int or float) — a number for formatting
+- `number (Union[int, float])` — a number for formatting
 
-⠀Returns str — the formatted number.
+⠀Returns `str` — the formatted number.
 
 ⠀Usage:
 ```py

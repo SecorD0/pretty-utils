@@ -1,37 +1,43 @@
+import random
 from decimal import Decimal
+from typing import Optional, Union
 
 
-def randfloat(from_: int or float, to_: int or float, step: int or float = 0.1) -> float:
+def randfloat(from_: Union[int, float, str], to_: Union[int, float, str],
+              step: Optional[Union[int, float, str]] = None) -> float:
     """
     Return a random float from the range.
 
-    :param int or float from_: the minimum value
-    :param int or float to_: the maximum value
-    :param int or float step: the step size (0.1)
+    :param Union[int, float, str] from_: the minimum value
+    :param Union[int, float, str] to_: the maximum value
+    :param Optional[Union[int, float, str]] step: the step size (calculated based on the number of decimal places)
     :return float: the random float
     """
-
-    from random import randint
-
     from_ = Decimal(str(from_))
     to_ = Decimal(str(to_))
+    if not step:
+        step = 1 / 10 ** (min(from_.as_tuple().exponent, to_.as_tuple().exponent) * -1)
+
     step = Decimal(str(step))
-    rand_int = Decimal(str(randint(0, int((to_ - from_) / step))))
+    rand_int = Decimal(str(random.randint(0, int((to_ - from_) / step))))
     return float(rand_int * step + from_)
 
 
-def float_range(from_: int or float, to_: int or float, step: int or float = 0.1) -> list:
+def float_range(from_: Union[int, float, str], to_: Union[int, float, str],
+                step: Optional[Union[int, float, str]] = None) -> list:
     """
     Return a float range.
 
-    :param int or float from_: a range start value
-    :param int or float to_: the range stop value, not included
-    :param int or float step: a step size (0.1)
-    :return float: the range list
+    :param Union[int, float, str] from_: a range start value
+    :param Union[int, float, str] to_: the range stop value, not included
+    :param Optional[Union[int, float, str]] step: a step size (calculated based on the number of decimal places)
+    :return list: the range list
     """
-
     from_ = Decimal(str(from_))
     to_ = Decimal(str(to_))
+    if not step:
+        step = 1 / 10 ** (min(from_.as_tuple().exponent, to_.as_tuple().exponent) * -1)
+
     step = Decimal(str(step))
     range_list = []
 

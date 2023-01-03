@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
@@ -138,7 +138,7 @@ class Sel:
         element.click()
         return element
 
-    def click_with_coord(self, find_it: str or WebElement, sec: int = 10, by: str = By.XPATH, x_off: int = 1,
+    def click_with_coord(self, find_it: Union[str, WebElement], sec: int = 10, by: str = By.XPATH, x_off: int = 1,
                          y_off: int = 1) -> Optional[WebElement]:
         """
         Explicit waits of an element appearing and click it via coordinates.
