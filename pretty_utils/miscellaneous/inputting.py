@@ -12,7 +12,7 @@ def get_input(stdin_fd, queue, prompt):
         queue.put(text)
 
     except:
-        queue.put()
+        pass
 
 
 def timeout_input(prompt: str, timeout: Union[int, float] = 60, default_value: str = '') -> str:
