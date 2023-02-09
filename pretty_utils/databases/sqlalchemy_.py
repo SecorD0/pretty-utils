@@ -1,6 +1,6 @@
 from typing import List, Union
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.exc import DatabaseError
 from sqlalchemy.orm import sessionmaker, Session
 
@@ -93,7 +93,7 @@ class DB:
         :param query: the query
         :param args: any additional arguments
         """
-        result = self.conn.execute(query, *args)
+        result = self.conn.execute(text(query), *args)
         self.commit()
         return result
 
