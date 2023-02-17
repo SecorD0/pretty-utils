@@ -38,29 +38,32 @@ def touch(path: Union[str, tuple, list], file: bool = False) -> bool:
     return False
 
 
-def write_json(path: Union[str, tuple, list], obj: Union[list, dict], indent: Optional[int] = None) -> None:
+def write_json(path: Union[str, tuple, list], obj: Union[list, dict], indent: Optional[int] = None,
+               encoding: Optional[str] = None) -> None:
     """
     Write Python list or dictionary to a JSON file.
 
     :param Union[str, tuple, list] path: path to the JSON file
     :param Union[list, dict] obj: the Python list or dictionary
     :param Optional[int] indent: the indent level
+    :param Optional[str] encoding: the name of the encoding used to decode or encode the file
     """
     path = join_path(path)
-    with open(path, 'w') as f:
+    with open(path, mode='w', encoding=encoding) as f:
         json.dump(obj, f, indent=indent)
 
 
-def read_lines(path: Union[str, tuple, list], skip_empty_rows: bool = False) -> list:
+def read_lines(path: Union[str, tuple, list], skip_empty_rows: bool = False, encoding: Optional[str] = None) -> list:
     """
     Read a file and return a list of lines.
 
     :param Union[str, tuple, list] path: path to the file
     :param bool skip_empty_rows: if True it doesn't include empty rows to the list
+    :param Optional[str] encoding: the name of the encoding used to decode or encode the file
     :return list: the list of lines
     """
     path = join_path(path)
-    with open(path) as f:
+    with open(path, encoding=encoding) as f:
         lines = f.readlines()
 
     lines = [line.rstrip() for line in lines]
@@ -70,15 +73,16 @@ def read_lines(path: Union[str, tuple, list], skip_empty_rows: bool = False) -> 
     return lines
 
 
-def read_json(path: Union[str, tuple, list]) -> Union[list, dict]:
+def read_json(path: Union[str, tuple, list], encoding: Optional[str] = None) -> Union[list, dict]:
     """
     Read a JSON file and return a Python list or dictionary.
 
     :param Union[str, tuple, list] path: path to the JSON file
+    :param Optional[str] encoding: the name of the encoding used to decode or encode the file
     :return Union[list, dict]: the Python list or dictionary
     """
     path = join_path(path)
-    return json.load(open(path))
+    return json.load(open(path, encoding=encoding))
 
 
 def resource_path(relative_path: str) -> str:
