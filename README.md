@@ -63,6 +63,8 @@
     - [SingletonThreading](#SingletonThreading)
     - [SingletonMultiprocessing](#SingletonMultiprocessing)
     - [SingletonAsyncio](#SingletonAsyncio)
+  - [dicts](#dicts)
+    - [update_dict](#update_dict)
   - [floats](#floats)
     - [randfloat](#randfloat)
     - [float_range](#float_range)
@@ -976,7 +978,7 @@ print(unix_to_strtime(utc_offset=3, format="%d.%m.%Y %H:%M"))
 
 <h2><p align="center">bools</p></h2>
 
-⠀Functions for working with boolean data type.
+⠀Functions for working with `bool` data type.
 
 <h3><p align="center">randbool</p></h3>
 
@@ -996,7 +998,7 @@ print(randbool())
 
 <h2><p align="center">classes</p></h2>
 
-⠀Functions for working with class data type.
+⠀Classes with various implemented functions to be inherited by other classes.
 
 <h3><p align="center">AutoRepr</p></h3>
 
@@ -1096,9 +1098,112 @@ print(id(settings), settings.a, settings)
 ⠀Usage similar to that in the [Singleton](#Singleton) function.
 
 
+<h2><p align="center">dicts</p></h2>
+
+⠀Functions for working with `dict` data type.
+
+<h3><p align="center">update_dict</p></h3>
+
+⠀Update the specified dictionary with any number of dictionary attachments based on the template without changing the values already set.
+
+⠀Accepted arguments:
+- `modifiable (dict)` — a dictionary for template-based modification
+- `template (dict)` — the dictionary-template
+- `rearrange (bool)` — make the order of the keys as in the template, and place the extra keys at the end (True)
+- `remove_extra_keys (bool)` — whether to remove unnecessary keys and their values (False)
+
+⠀Returns `dict` — the modified dictionary.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.dicts import update_dict
+
+a = {
+    'custom': 'world',  # extra key
+    'bool': True,
+    'list': [0, 1, 2, 3],  # edited list
+    'float': 10.4,
+    'dict': {
+        'bool': False,  # edited bool
+        'dict': {
+            'list': [0, 3],  # edited list
+            'custom': 'bye',  # extra key
+            'int': 10
+        }
+    }
+}
+
+b = {
+    'bool': True,
+    'dict': {
+        'bool': True,
+        'dict': {
+            'int': 10,
+            'list': [0, 1, 2, 3]
+        }
+    },
+    'float': 10.4,
+    'int': 100,
+    'list': [0, 1],
+    'str': 'hello'
+}
+
+print(update_dict(modifiable=a, template=b))
+# {
+# 	'bool': True,
+# 	'dict': {
+# 		'bool': False,
+# 		'dict': {
+# 			'int': 10,
+# 			'list': [0, 3],
+# 			'custom': 'bye'
+# 		}
+# 	},
+# 	'float': 10.4,
+# 	'int': 100,
+# 	'list': [0, 1, 2, 3],
+# 	'str': 'hello',
+# 	'custom': 'world'
+# }
+
+print(update_dict(modifiable=a, template=b, rearrange=False))
+# {
+# 	'custom': 'world',
+# 	'bool': True,
+# 	'list': [0, 1, 2, 3],
+# 	'float': 10.4,
+# 	'dict': {
+# 		'bool': False,
+# 		'dict': {
+# 			'list': [0, 3],
+# 			'custom': 'bye',
+# 			'int': 10
+# 		}
+# 	},
+# 	'int': 100,
+# 	'str': 'hello'
+# }
+
+print(update_dict(modifiable=a, template=b, rearrange=False, remove_extra_keys=True))
+# {
+# 	'bool': True,
+# 	'list': [0, 1, 2, 3],
+# 	'float': 10.4,
+# 	'dict': {
+# 		'bool': False,
+# 		'dict': {
+# 			'list': [0, 3],
+# 			'int': 10
+# 		}
+# 	},
+# 	'int': 100,
+# 	'str': 'hello'
+# }
+```
+
 <h2><p align="center">floats</p></h2>
 
-⠀Functions for working with float data type.
+⠀Functions for working with `float` data type.
 
 <h3><p align="center">randfloat</p></h3>
 
@@ -1161,7 +1266,7 @@ print(float_range(7.25, 6.91, -0.05))
 
 <h2><p align="center">lists</p></h2>
 
-⠀Functions for working with list data type.
+⠀Functions for working with `list` data type.
 
 <h3><p align="center">split_list</p></h3>
 
@@ -1214,7 +1319,7 @@ print(replace_to_null([22, None, 84, None, None, 1, 0]))
 
 <h2><p align="center">strings</p></h2>
 
-⠀Functions for working with string data type.
+⠀Functions for working with `str` data type.
 
 <h3><p align="center">text_between</p></h3>
 
