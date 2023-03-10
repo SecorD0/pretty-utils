@@ -39,6 +39,7 @@ class DB:
                 db_url = self.db_url.split('/')
                 database = db_url[-1]
                 db_url = '/'.join(db_url[0:-1])
+
             else:
                 db_url = self.db_url
 
@@ -46,6 +47,7 @@ class DB:
             with engine.connect() as conn:
                 conn.execute('COMMIT')
                 conn.execute(f'CREATE DATABASE {database}')
+
         except:
             pass
 
@@ -68,6 +70,7 @@ class DB:
         """
         if criterion:
             return self.s.query(entities).filter(*criterion).all()
+
         return self.s.query(entities).all()
 
     def one(self, entities, *criterion, from_the_end: bool = False):
@@ -83,7 +86,9 @@ class DB:
         if all:
             if from_the_end:
                 return all[-1]
+
             return all[0]
+
         return None
 
     def execute(self, query, *args):
@@ -103,6 +108,7 @@ class DB:
         """
         try:
             self.s.commit()
+
         except DatabaseError:
             self.s.rollback()
 
@@ -114,8 +120,11 @@ class DB:
         """
         if isinstance(row, list):
             self.s.add_all(row)
+
         elif isinstance(row, object):
             self.s.add(row)
+
         else:
             DBException('Wrong type!')
+
         self.commit()

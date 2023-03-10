@@ -1,3 +1,7 @@
+from random import choice, randint
+from string import ascii_lowercase, ascii_uppercase, digits
+
+
 def nickname(len: int = 9, capital: bool = False) -> str:
     """
     Deprecated, use username.
@@ -13,8 +17,6 @@ def username(len: int = 9, capital: bool = False) -> str:
     :param capital: capitalize the first letter (False)
     :return: the generated username
     """
-    from random import choice, randint
-
     vowels = ('a', 'e', 'i', 'o', 'u', 'y')
     consonants = ('b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z',
                   'sh', 'zh', 'ch', 'kh', 'th')
@@ -25,11 +27,13 @@ def username(len: int = 9, capital: bool = False) -> str:
         is_even = i % 2 == 0
         if (is_vowels_first and is_even) or (not is_vowels_first and not is_even):
             result += choice(vowels)
+
         else:
             result += choice(consonants)
 
     if capital:
         return result.title()
+
     return result
 
 
@@ -43,17 +47,16 @@ def password(len: int = 16, use_capitals: bool = True, use_digits: bool = True, 
     :param use_specials: use special symbols (False)
     :return: the generated password
     """
-    from random import choice
-    from string import ascii_lowercase, ascii_uppercase, digits
-
     lowers = ascii_lowercase
     capitals = ascii_uppercase
     specials = '+-/*!&$#?=@<>'
     chars = lowers
     if use_capitals:
         chars += capitals
+
     if use_digits:
         chars += digits
+
     if use_specials:
         chars += specials
 
@@ -66,6 +69,7 @@ def password(len: int = 16, use_capitals: bool = True, use_digits: bool = True, 
         if letter in password:
             exist = True
             break
+
     if not exist:
         password = password[1:] + choice(lowers)
 
@@ -75,6 +79,7 @@ def password(len: int = 16, use_capitals: bool = True, use_digits: bool = True, 
             if letter in password:
                 exist = True
                 break
+
         if not exist:
             password = password[1:] + choice(capitals)
 
@@ -84,6 +89,7 @@ def password(len: int = 16, use_capitals: bool = True, use_digits: bool = True, 
             if letter in password:
                 exist = True
                 break
+
         if not exist:
             password = password[1:] + choice(digits)
 
@@ -93,6 +99,7 @@ def password(len: int = 16, use_capitals: bool = True, use_digits: bool = True, 
             if letter in password:
                 exist = True
                 break
+
         if not exist:
             password = password[1:] + choice(specials)
 

@@ -12,36 +12,39 @@ class AutoRepr:
 
 
 class Singleton:
+    """A class that implements the singleton pattern."""
     _instances = {}
 
     def __new__(cls, *args, **kwargs):
         if cls not in cls._instances:
-            instance = super().__new__(cls, *args, **kwargs)
-            cls._instances[cls] = instance
+            cls._instances[cls] = super(Singleton, cls).__new__(cls)
 
         return cls._instances[cls]
 
 
 class SingletonWithLock:
+    """A class that implements the singleton pattern with the lock."""
     _instances = {}
     _lock = threading.Lock()
 
     def __new__(cls, *args, **kwargs):
         with cls._lock:
             if cls not in cls._instances:
-                instance = super().__new__(cls, *args, **kwargs)
-                cls._instances[cls] = instance
+                cls._instances[cls] = super(SingletonWithLock, cls).__new__(cls)
 
         return cls._instances[cls]
 
 
 class SingletonThreading(SingletonWithLock):
+    """A class that implements the singleton pattern with the threading lock."""
     pass
 
 
 class SingletonMultiprocessing(SingletonWithLock):
+    """A class that implements the singleton pattern with the multiprocessing lock."""
     _lock = multiprocessing.Lock()
 
 
 class SingletonAsyncio(SingletonWithLock):
+    """A class that implements the singleton pattern with the asyncio lock."""
     _lock = asyncio.Lock()

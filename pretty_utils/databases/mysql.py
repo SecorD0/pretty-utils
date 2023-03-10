@@ -12,6 +12,7 @@ class DB:
     """
     It's a class to interact with a MySQL database via SQL queries.
     """
+
     def __init__(self, database: str = "database", host: str = "localhost", user: str = "root",
                  passwd: Optional[str] = None, **kwargs):
         """
@@ -32,6 +33,7 @@ class DB:
                 autocommit=True,
                 **kwargs
             )
+
         else:
             self.conn = mysql.connector.connect(
                 host=host,
@@ -41,8 +43,10 @@ class DB:
                 autocommit=True,
                 **kwargs
             )
+
         try:
             self.cursor = self.conn.cursor()
+
         except Exception as e:
             raise DBException(f'\n{str(e)}')
 
@@ -57,9 +61,11 @@ class DB:
         try:
             if not self.conn:
                 self.__init__(self.database)
+
             else:
                 if data:
                     self.cursor.execute(query, data)
+
                 else:
                     self.cursor.execute(query)
 
@@ -69,6 +75,7 @@ class DB:
                 elif 'SELECT' in query:
                     if fetchone:
                         return self.cursor.fetchone()
+
                     else:
                         return self.cursor.fetchall()
 

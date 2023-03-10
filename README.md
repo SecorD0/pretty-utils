@@ -29,6 +29,7 @@
       - [make_sql](#make_sql)
 - [miscellaneous](#miscellaneous)
     - [files](#files)
+      - [join_path](#join_path)
       - [touch](#touch)
       - [write_json](#write_json)
       - [read_lines](#read_lines)
@@ -56,6 +57,12 @@
 - [type_functions](#type_functions)
   - [bools](#bools)
     - [randbool](#randbool)
+  - [classes](#classes)
+    - [AutoRepr](#AutoRepr)
+    - [Singleton](#Singleton)
+    - [SingletonThreading](#SingletonThreading)
+    - [SingletonMultiprocessing](#SingletonMultiprocessing)
+    - [SingletonAsyncio](#SingletonAsyncio)
   - [floats](#floats)
     - [randfloat](#randfloat)
     - [float_range](#float_range)
@@ -68,6 +75,8 @@
     - [format_number](#format_number)
 - [Report a bug or suggest an idea](#Report-a-bug-or-suggest-an-idea)
 - [Express your gratitude](#Express-your-gratitude)
+
+
 
 <h1><p align="center">Short description</p></h1>
 <p align="right"><a href="#Content">To the content</a></p>
@@ -149,10 +158,12 @@ db.execute('INSERT INTO users (u_id, username) VALUES (%s, %s)', (102, 'gok',))
 res = db.execute('SELECT * FROM users')
 print(res)
 # [(1, 33, 'username'), (2, 102, 'gok')]
+
 db.execute('UPDATE users SET username = %s WHERE u_id = %s', ('new_username', 33,))
 res = db.execute('SELECT * FROM users', fetchone=True)
 print(res)
 # (1, 33, 'new_username')
+
 ```
 
 
@@ -262,6 +273,7 @@ print(user)
 temp_users: List[User] = db.execute('SELECT * FROM temp').fetchall()
 print(temp_users)
 # [User(...), User(...), ...]
+
 db.execute('DROP TABLE temp')
 ```
 
@@ -337,9 +349,11 @@ db.execute('INSERT INTO users (u_id, username) VALUES (?, ?)', (102, 'gok',))
 res = db.execute('SELECT * FROM users')
 print(res)
 # [data(id=1, u_id=33, username='username'), data(id=2, u_id=102, username='gok')]
+
 res = db.execute('SELECT * FROM users', return_class=False)
 print(res)
 # [(1, 33, 'username'), (2, 102, 'gok')]
+
 db.execute('UPDATE users SET username = ? WHERE u_id = ?', ('new_username', 33,))
 res = db.execute('SELECT * FROM users', fetchone=True)
 print(res)
@@ -397,9 +411,11 @@ from pretty_utils.miscellaneous.files import join_path
 path = join_path('data/images/1.png')
 print(path)
 # data/images/1.png
+
 path = join_path(('data', 'images', '1.png'))
 print(path)
 # data\images\1.png
+
 path = join_path(['data', 'images', '1.png'])
 print(path)
 # data\images\1.png
@@ -419,13 +435,15 @@ print(path)
 ```py
 from pretty_utils.miscellaneous.files import touch
 
-resp = touch('images')
+resp = touch(path='images')
 print(resp)
 # True
-resp = touch('images')
+
+resp = touch(path='images')
 print(resp)
 # False
-resp = touch('text.txt', True)
+
+resp = touch(path='text.txt', file=True)
 print(resp)
 # True
 ```
@@ -437,14 +455,15 @@ print(resp)
 ⠀Accepted arguments:
 - `path (Union[str, tuple, list])` — path to the JSON file
 - `obj (Union[list, dict])` — the Python list or dictionary
-- `indent (int)` — the indent level
+- `indent (Optional[int])` — the indent level (None)
+- `encoding (Optional[str])` — the name of the encoding used to decode or encode the file (None)
 
 ⠀Usage:
 ```py
 from pretty_utils.miscellaneous.files import write_json
 
 users = [{'id': 33, 'username': 'username'}, {'id': 102, 'username': 'gok'}]
-write_json('users.json', users, 2)
+write_json(path='users.json', obj=users, indent=2)
 ```
 
 <h3><p align="center">read_lines</p></h3>
@@ -454,6 +473,7 @@ write_json('users.json', users, 2)
 ⠀Accepted arguments:
 - `path (Union[str, tuple, list])` — path to the file
 - `skip_empty_rows (bool)` — if True it doesn't include empty rows to the list
+- `encoding (Optional[str])` — the name of the encoding used to decode or encode the file (None)
 
 ⠀Returns `list` — the list of lines.
 
@@ -464,11 +484,11 @@ from pretty_utils.miscellaneous.files import read_lines
 with open('text.txt', 'w') as f:
     f.write('Hello,\n\nWorld!')
 
-lines = read_lines('text.txt')
+lines = read_lines(path='text.txt')
 print(lines)
 # ['Hello,', '', 'World!']
 
-lines = read_lines('text.txt', True)
+lines = read_lines(path='text.txt', skip_empty_rows=True, encoding='utf-8')
 print(lines)
 # ['Hello,', 'World!']
 ```
@@ -479,6 +499,7 @@ print(lines)
 
 ⠀Accepted arguments:
 - `path (Union[str, tuple, list])` — path to the JSON file
+- `encoding (Optional[str])` — the name of the encoding used to decode or encode the file (None)
 
 ⠀Returns `Union[list, dict]` — the Python list or dictionary.
 
@@ -487,9 +508,9 @@ print(lines)
 from pretty_utils.miscellaneous.files import write_json, read_json
 
 users = [{'id': 33, 'username': 'username'}, {'id': 102, 'username': 'gok'}]
-write_json('users.json', users)
+write_json(path='users.json', obj=users)
 
-resp = read_json('users.json')
+resp = read_json(path='users.json')
 print(resp)
 # [{'id': 33, 'username': 'username'}, {'id': 102, 'username': 'gok'}]
 ```
@@ -507,7 +528,7 @@ print(resp)
 ```py
 from pretty_utils.miscellaneous.files import resource_path
 
-absolute_path = resource_path('images')
+absolute_path = resource_path(relative_path='images')
 print(absolute_path)
 # C:\python\my_project\images
 ```
@@ -535,11 +556,11 @@ username = generators.username()
 print(username)
 # kuganurah
 
-username = generators.username(15)
+username = generators.username(len=15)
 print(username)
 # xohosyzinehucus
 
-username = generators.username(6, True)
+username = generators.username(len=6, capital=True)
 print(username)
 # Asexop
 ```
@@ -564,11 +585,11 @@ password = generators.password()
 print(password)
 # bz7drWwcqK3AcI2h
 
-password = generators.password(8, use_digits=False)
+password = generators.password(len=8, use_digits=False)
 print(password)
 # FuRbgKlA
 
-password = generators.password(12, use_specials=True)
+password = generators.password(len=12, use_specials=True)
 print(password)
 # Lx1M7ph*Ytu=
 ```
@@ -594,7 +615,7 @@ print(password)
 from pretty_utils.miscellaneous.inputting import timeout_input
 
 if __name__ == '__main__':
-    name = timeout_input('Enter your name: ', default_value='John')  # Input 'Michael'
+    name = timeout_input(prompt='Enter your name: ', default_value='John')  # Input 'Michael'
     print(f'Your name is {name}.\n')
     # Your name is Michael.
 
@@ -602,7 +623,7 @@ if __name__ == '__main__':
 1) Do nothing;
 2) Causing rain;
 3) Causing an earthquake.''')
-    action = timeout_input('> ', 5, '1')  # Just wait
+    action = timeout_input(prompt='> ', timeout=5, default_value='1')  # Just wait
     print(f'{name}, you select {action}!')
     # Michael, you select 1!
 ```
@@ -650,6 +671,7 @@ browser.get('https://www.google.com/')
 element = sel.get_element('/html/body/div[1]/div[5]/div[2]/div[3]/span/span/g-popup/div[1]')
 print(element)
 # <selenium.webdriver.remote.webelement.WebElement (session="...", element="...")>
+
 browser.quit()
 ```
 
@@ -675,6 +697,7 @@ browser.get('https://www.google.com/')
 text = sel.get_text('/html/body/div[1]/div[5]/div[2]/div[3]/span/span/g-popup/div[1]')
 print(text)
 # Settings
+
 browser.quit()
 ```
 
@@ -700,6 +723,7 @@ browser.get('https://www.google.com/')
 element = sel.wait_for_clickability('/html/body/div[1]/div[5]/div[2]/div[3]/span/span/g-popup/div[1]')
 print(element)
 # <selenium.webdriver.remote.webelement.WebElement (session="...", element="...")>
+
 browser.quit()
 ```
 
@@ -725,6 +749,7 @@ browser.get('https://www.google.com/')
 element = sel.wait_for_visibility('/html/body/div[1]/div[5]/div[2]/div[3]/span/span/g-popup/div[1]')
 print(element)
 # <selenium.webdriver.remote.webelement.WebElement (session="...", element="...")>
+
 browser.quit()
 ```
 
@@ -753,6 +778,7 @@ time.sleep(5)
 element = sel.clear('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input')
 print(element)
 # <selenium.webdriver.remote.webelement.WebElement (session="...", element="...")>
+
 time.sleep(5)
 browser.quit()
 ```
@@ -785,6 +811,7 @@ time.sleep(5)
 element = sel.write('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input', 'google')
 print(element)
 # <selenium.webdriver.remote.webelement.WebElement (session="...", element="...")>
+
 time.sleep(5)
 browser.quit()
 ```
@@ -815,6 +842,7 @@ sel.wait_for_clickability('//*[@id="lb"]/div/g-menu/g-menu-item[1]/div')
 element = sel.click('//*[@id="lb"]/div/g-menu/g-menu-item[1]/div')
 print(element)
 # <selenium.webdriver.remote.webelement.WebElement (session="...", element="...")>
+
 time.sleep(5)
 browser.quit()
 ```
@@ -873,6 +901,7 @@ time.sleep(5)
 element = sel.click_when_clicable('//*[@id="lb"]/div/g-menu/g-menu-item[1]/div')
 print(element)
 # <selenium.webdriver.remote.webelement.WebElement (session="...", element="...")>
+
 time.sleep(5)
 browser.quit()
 ```
@@ -899,11 +928,13 @@ from pretty_utils.miscellaneous.time_and_date import strtime_to_unix
 
 str_time = '27.06.2022 12:35'
 
-print(strtime_to_unix(str_time, 0))  # 12:35 UTC
+print(strtime_to_unix(strtime=str_time, utc_offset=0))  # 12:35 UTC
 # 1656333300
-print(strtime_to_unix(str_time, -4))  # 16:35 UTC
+
+print(strtime_to_unix(strtime=str_time, utc_offset=-4))  # 16:35 UTC
 # 1656347700
-print(strtime_to_unix(str_time, 3))  # 09:35 UTC
+
+print(strtime_to_unix(strtime=str_time, utc_offset=3))  # 09:35 UTC
 # 1656322500
 ```
 
@@ -912,7 +943,7 @@ print(strtime_to_unix(str_time, 3))  # 09:35 UTC
 ⠀Convert unix to string time. In particular return the current time.
 
 ⠀Accepted arguments:
-- `strtime (Union[int, float, str])` — a unix time (current)
+- `unix_time (Union[int, float, str])` — a unix time (current)
 - `utc_offset (int)` — hour offset from UTC (None)
 - `format (str)` — format for string time output (%d.%m.%Y %H:%M)
 
@@ -922,14 +953,17 @@ print(strtime_to_unix(str_time, 3))  # 09:35 UTC
 ```py
 from pretty_utils.miscellaneous.time_and_date import unix_to_strtime
 
-print(unix_to_strtime(1665831600))  # 11:00 UTC
-# 15.10.2022 11:00
-print(unix_to_strtime(1665831600.0, 2))  # 11:00 -> 13:00 UTC+2
-# 15.10.2022 13:00
-print(unix_to_strtime('1665831600', -4))  # 11:00 -> 07:00 UTC-4
-# 15.10.2022 07:00
-print(unix_to_strtime(utc_offset=3, format="%d.%m.%Y %H:%M:%S"))
-# 15.10.2022 16:34:48
+print(unix_to_strtime(unix_time=1665831600))  # 11:00 UTC
+# 15.10.2022 11:00:00
+
+print(unix_to_strtime(unix_time=1665831600.0, utc_offset=2))  # 11:00 -> 13:00 UTC+2
+# 15.10.2022 13:00:00
+
+print(unix_to_strtime(unix_time='1665831600', utc_offset=-4))  # 11:00 -> 07:00 UTC-4
+# 15.10.2022 07:00:00
+
+print(unix_to_strtime(utc_offset=3, format="%d.%m.%Y %H:%M"))
+# 15.10.2022 16:34
 ```
 
 
@@ -954,6 +988,7 @@ from pretty_utils.type_functions.bools import randbool
 
 print(randbool())
 # True
+
 print(randbool())
 # False
 ```
@@ -987,10 +1022,78 @@ class ReadablePerson(AutoRepr):
 person = UnreadablePerson(name='John', age=32)
 print(person)
 # <__main__.UnreadablePerson object at 0x...>
+
 person = ReadablePerson(name='John', age=32)
 print(person)
 # ReadablePerson(name='John', age=32)
 ```
+
+<h3><p align="center">Singleton</p></h3>
+
+⠀A class that implements the singleton pattern.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.classes import AutoRepr, Singleton
+
+
+class SettingsS(Singleton):
+    def __init__(self, a: int):
+        self.a = a
+
+
+class SettingsSA(Singleton, AutoRepr):
+    def __init__(self, a: int):
+        self.a = a
+
+
+class Settings:
+    def __init__(self, a: int):
+        self.a = a
+
+
+settings_s = SettingsS(a=1)
+print(id(settings_s), settings_s.a, settings_s)
+# 1622951686000 1 <__main__.SettingsS object at 0x00000179DF756F70>
+
+settings_s = SettingsS(a=2)
+print(id(settings_s), settings_s.a, settings_s)
+# 1622951686000 2 <__main__.SettingsS object at 0x00000179DF756F70>
+
+settings_sa = SettingsSA(a=1)
+print(id(settings_sa), settings_sa)
+# 1622951752704 SettingsSA(a=1)
+
+settings_sa = SettingsSA(a=2)
+print(id(settings_sa), settings_sa)
+# 1622951752704 SettingsSA(a=2)
+
+settings = Settings(a=1)
+print(id(settings), settings.a, settings)
+# 1622951753664 1 <__main__.Settings object at 0x00000179DF7677C0>
+
+settings = Settings(a=2)
+print(id(settings), settings.a, settings)
+# 1622951753712 2 <__main__.Settings object at 0x00000179DF7677F0>
+```
+
+<h3><p align="center">SingletonThreading</p></h3>
+
+⠀A class that implements the singleton pattern with the threading lock.
+
+⠀Usage similar to that in the [Singleton](#Singleton) function.
+
+<h3><p align="center">SingletonMultiprocessing</p></h3>
+
+⠀A class that implements the singleton pattern with the multiprocessing lock.
+
+⠀Usage similar to that in the [Singleton](#Singleton) function.
+
+<h3><p align="center">SingletonAsyncio</p></h3>
+
+⠀A class that implements the singleton pattern with the asyncio lock.
+
+⠀Usage similar to that in the [Singleton](#Singleton) function.
 
 
 <h2><p align="center">floats</p></h2>
@@ -1192,8 +1295,15 @@ from pretty_utils.type_functions.strings import format_number
 
 print(format_number(14_386_730))
 # 14 386 730
+
 print(format_number(8401.6047))
 # 8 401.6047
+
+print(format_number(24_801_302.0192, thousands_separator=','))
+# 24,801,302.0192
+
+print(format_number(1_000_922.3905, thousands_separator="'"))
+# 1'000'922.3905
 ```
 
 

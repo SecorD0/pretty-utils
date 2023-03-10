@@ -30,6 +30,7 @@ def touch(path: Union[str, tuple, list], file: bool = False) -> bool:
         if not os.path.exists(path):
             with open(path, 'w') as f:
                 f.write('')
+
             return True
 
         return False
@@ -97,7 +98,7 @@ def resource_path(relative_path: str) -> str:
     """
     try:
         base_path = sys._MEIPASS
-        
+
     except:
         base_path = os.path.abspath('.')
 

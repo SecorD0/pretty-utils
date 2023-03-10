@@ -22,11 +22,13 @@ class DB:
         self.kwargs = kwargs
         if not kwargs:
             self.db = sqlite3.connect(self.database_file, isolation_level=None)
+
         else:
             self.db = sqlite3.connect(self.database_file, **kwargs)
 
         try:
             self.cursor = self.db.cursor()
+
         except Exception as e:
             raise DBException(f'\n{str(e)}')
 
@@ -45,12 +47,14 @@ class DB:
             try:
                 if data:
                     self.cursor.execute(query, data)
+
                 else:
                     self.cursor.execute(query)
 
                 response = []
                 try:
                     headers = tuple([description[0] for description in self.cursor.description])
+
                 except:
                     headers = ()
 
@@ -61,18 +65,23 @@ class DB:
                     try:
                         if return_class:
                             return dynamic_class('data', headers, self.cursor.fetchone())
+
                         else:
                             if with_column_names:
                                 response.append(self.cursor.fetchone())
+
                             else:
                                 response = self.cursor.fetchone()
+
                     except:
                         pass
+
                 else:
                     if return_class:
                         response = []
                         for row in self.cursor.fetchall():
                             response.append(dynamic_class('data', headers, row))
+
                     else:
                         response += self.cursor.fetchall()
 
@@ -81,6 +90,7 @@ class DB:
             except sqlite3.ProgrammingError as e:
                 if 'Cannot operate on a closed cursor' in str(e):
                     self.__init__(self.database_file, **self.kwargs)
+
                 else:
                     raise DBException(f'\n{str(e)}')
 
@@ -102,6 +112,7 @@ def dynamic_class(class_name: str, variables: Union[list, tuple], values: Union[
     class_format = f'{class_name}('
     for i in range(len(variables)):
         class_format += f'{variables[i]}={repr(values[i])}, '
+
     metaclass = type(class_name, (type,), {'__repr__': lambda cls: class_format[:-2] + ')'})
     return metaclass(class_name, (object,), class_dict)
 
@@ -117,11 +128,14 @@ def make_sql(query: str, data: tuple = None, ret1: bool = False, ret_class: bool
             if data:
                 try:
                     cursor.execute(query, data)
+
                 except Exception as e:
                     raise DBException(f'\n{str(e)}')
+
             else:
                 try:
                     cursor.execute(query)
+
                 except Exception as e:
                     raise DBException(f'\n{str(e)}')
 
@@ -129,8 +143,10 @@ def make_sql(query: str, data: tuple = None, ret1: bool = False, ret_class: bool
             response = []
             try:
                 headers = tuple([description[0] for description in cursor.description])
+
             except:
                 headers = ()
+
             if with_column_names:
                 response.append(headers)
 
@@ -138,13 +154,17 @@ def make_sql(query: str, data: tuple = None, ret1: bool = False, ret_class: bool
                 try:
                     if ret_class:
                         return dynamic_class('data', headers, cursor.fetchone())
+
                     else:
                         if with_column_names:
                             response.append(cursor.fetchone())
+
                         else:
                             response = cursor.fetchone()
+
                 except:
                     pass
+
             else:
                 if ret_class:
                     response = []
@@ -152,6 +172,7 @@ def make_sql(query: str, data: tuple = None, ret1: bool = False, ret_class: bool
                         response.append(dynamic_class('data', headers, row))
                 else:
                     response += cursor.fetchall()
+
             return response
 
         except Exception as e:

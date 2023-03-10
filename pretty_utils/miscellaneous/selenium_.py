@@ -43,6 +43,7 @@ class Sel:
         """
         try:
             return self.get_element(find_it, sec, by).text
+
         except:
             pass
 
@@ -96,6 +97,7 @@ class Sel:
         element = self.get_element(find_it, sec, by)
         if clear:
             element.clear()
+
         element.send_keys(text)
         return element
 
@@ -152,6 +154,7 @@ class Sel:
         """
         if isinstance(find_it, str):
             element = self.get_element(find_it, sec, by)
+
         else:
             element = find_it
 

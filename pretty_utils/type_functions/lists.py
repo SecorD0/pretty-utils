@@ -1,3 +1,6 @@
+import math
+
+
 def split_list(s_list: list, n: int = 100, parts: bool = False) -> list:
     """
     Split a list to several lists.
@@ -7,8 +10,6 @@ def split_list(s_list: list, n: int = 100, parts: bool = False) -> list:
     :param bool parts: split the list into N parts (False)
     :return list: the split list
     """
-    import math
-
     if parts:
         n = math.ceil(len(s_list) / n)
 
@@ -16,6 +17,7 @@ def split_list(s_list: list, n: int = 100, parts: bool = False) -> list:
         lists = []
         for i in range(0, len(s_list), n):
             lists.append(s_list[i:i + n])
+
     else:
         lists = [s_list]
 
@@ -32,4 +34,5 @@ def replace_to_null(r_list: list) -> list:
     for i in range(len(r_list)):
         if r_list[i] is None:
             r_list[i] = 0
+
     return r_list
