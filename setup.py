@@ -7,7 +7,7 @@ with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.md'),
 
 setup(
     name='pretty-utils',
-    version='1.1.7',
+    version='1.1.8',
     license='Apache-2.0',
     author='SecorD',
     description='Convenient functions in one package',

@@ -38,6 +38,8 @@
     - [generators](#generators)
       - [username](#username)
       - [password](#password)
+    - [http](#http)
+      - [aiohttp_params](#aiohttp_params)
     - [inputting](#inputting)
       - [timeout_input](#timeout_input)
     - [selenium_](#selenium_)
@@ -594,6 +596,49 @@ print(password)
 password = generators.password(len=12, use_specials=True)
 print(password)
 # Lx1M7ph*Ytu=
+```
+
+
+<h2><p align="center">http</p></h2>
+
+⠀Functions related to sending requests via `requests` or `aiohttp` libraries.
+
+<h3><p align="center">aiohttp_params</p></h3>
+
+⠀Convert requests params to aiohttp params.
+
+⠀Accepted arguments:
+- `params (Optional[Dict[str, Any]])` — requests params
+
+⠀Returns `Optional[Dict[str, Union[str, int, float]]]` — aiohttp params.
+
+⠀Usage:
+```py
+from pretty_utils.miscellaneous.http import aiohttp_params
+
+params = {
+    'a': True,
+    'b': 1,
+    'c': 1.0,
+    'd': 'hello',
+    'e': 'world',
+    'f': None,
+    'g': b'agsdgha==',
+    'h': False,
+    'i': None
+
+}
+
+print(aiohttp_params(params))
+# {
+# 	'a': 'true',
+# 	'b': 1,
+# 	'c': 1.0,
+# 	'd': 'hello',
+# 	'e': 'world',
+# 	'g': 'agsdgha==',
+# 	'h': 'false'
+# }
 ```
 
 
