@@ -1045,6 +1045,21 @@ print(randbool())
 
 ⠀Classes with various implemented functions to be inherited by other classes.
 
+<h3><p align="center">ArbitraryAttributes</p></h3>
+
+⠀A class that can be assigned arbitrary attributes.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.classes import ArbitraryAttributes
+
+instance_1 = ArbitraryAttributes(one=1, two=2)
+instance_2 = ArbitraryAttributes(str_='str', float_='float')
+
+print(instance_1.two, instance_2.str_, instance_1.one, instance_2.float_)
+# 2 str 1 float
+```
+
 <h3><p align="center">AutoRepr</p></h3>
 
 ⠀Contains a `__repr__` function that automatically builds the output of a class using all its variables.

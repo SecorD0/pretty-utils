@@ -3,6 +3,13 @@ import multiprocessing
 import threading
 
 
+class ArbitraryAttributes:
+    """A class that can be assigned arbitrary attributes."""
+
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
+
+
 class AutoRepr:
     """Contains a __repr__ function that automatically builds the output of a class using all its variables."""
 
