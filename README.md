@@ -653,7 +653,8 @@ print(aiohttp_params(params))
 ⠀Accepted arguments:
 - `prompt (str)` — a prompt that will be displayed before the input request
 - `timeout (Union[int, float])` — a timeout after which the default value will be returned (60)
-- `default_value (str)` — a default value that will be returned after the timeout expires
+- `default_value (str)` — a default value that will be returned after the timeout expires (empty string)
+- `end (str)` — string appended after the last value (two newlines)
 
 ⠀Returns `str` — the inputted or default value.
 
