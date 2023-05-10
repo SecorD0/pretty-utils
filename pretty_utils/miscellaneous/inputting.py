@@ -15,7 +15,7 @@ def get_input(stdin_fd, queue, prompt):
         pass
 
 
-def timeout_input(prompt: str, timeout: Union[int, float] = 60, default_value: str = '', end: str = '\n\n') -> str:
+def timeout_input(prompt: str, timeout: Union[int, float] = 60, default_value: str = '', end: str = '\n') -> str:
     """
     Ask a user to enter a string, and if he doesn't do so in a certain amount of time, return the default value.
     Works only in if __name__ == '__main__' construction.
