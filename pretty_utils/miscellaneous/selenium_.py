@@ -3,6 +3,7 @@ from typing import Optional, Union
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -19,7 +20,7 @@ class Sel:
 
         :param webdriver browser: instance of WebDriver (Ie, Firefox, Chrome or Remote)
         """
-        self.browser = browser
+        self.browser: WebDriver = browser
 
     def get_element(self, find_it: str, sec: int = 10, by: str = By.XPATH) -> Optional[WebElement]:
         """
