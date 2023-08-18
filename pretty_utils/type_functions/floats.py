@@ -1,3 +1,4 @@
+import math
 import random
 from decimal import Decimal
 from typing import Optional, Union
@@ -52,3 +53,27 @@ def float_range(from_: Union[int, float, str], to_: Union[int, float, str],
             from_ += step
 
     return range_list
+
+
+def round_down(n: float, decimals: int = 0) -> float:
+    """
+    Round down a float number.
+
+    :param float n: the float number
+    :param int decimals: the decimals
+    :return float: rounded down the float number
+    """
+    multiplier = 10 ** decimals
+    return math.floor(n * multiplier) / multiplier
+
+
+def round_up(n: float, decimals: int = 0) -> float:
+    """
+    Round up a float number.
+
+    :param float n: the float number
+    :param int decimals: the decimals
+    :return float: rounded up the float number
+    """
+    multiplier = 10 ** decimals
+    return math.ceil(n * multiplier) / multiplier

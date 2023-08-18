@@ -70,6 +70,8 @@
   - [floats](#floats)
     - [randfloat](#randfloat)
     - [float_range](#float_range)
+    - [round_down](#round_down)
+    - [round_up](#round_up)
   - [lists](#lists)
     - [split_list](#split_list)
     - [replace_to_null](#replace_to_null)
@@ -103,6 +105,8 @@
 ⠀[MySQL](https://www.mysql.com/)
 
 ⠀[SQLAlchemy](https://www.sqlalchemy.org/)
+
+
 
 <h1><p align="center">Installation</p></h1>
 <p align="right"><a href="#Content">To the content</a></p>
@@ -1262,6 +1266,7 @@ print(update_dict(modifiable=a, template=b, rearrange=False, remove_extra_keys=T
 # }
 ```
 
+
 <h2><p align="center">floats</p></h2>
 
 ⠀Functions for working with `float` data type.
@@ -1324,6 +1329,67 @@ print(float_range(0.6, 0.7, 0.02))
 print(float_range(7.25, 6.91, -0.05))
 # [7.25, 7.2, 7.15, 7.1, 7.05, 7.0, 6.95]
 ```
+
+<h3><p align="center">round_down</p></h3>
+
+⠀Round down a float number.
+
+⠀Accepted arguments:
+- `n (float)` — the float number
+- `decimals (int)` — the decimals
+
+⠀Returns `float` — rounded down the float number.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.floats import round_down
+
+print(round_down(5.232235, 3))
+# 5.232
+
+print(round_down(1.05, 1))
+# 1.0
+
+print(round_down(0.6))
+# 0.0
+
+print(round_down(17.128, -1))
+# 10.0
+
+print(round_down(1159, -2))
+# 1100.0
+```
+
+<h3><p align="center">round_up</p></h3>
+
+⠀Round up a float number.
+
+⠀Accepted arguments:
+- `n (float)` — the float number
+- `decimals (int)` — the decimals
+
+⠀Returns `float` — rounded up the float number.
+
+⠀Usage:
+```py
+from pretty_utils.type_functions.floats import round_up
+
+print(round_up(5.232235, 3))
+# 5.233
+
+print(round_up(1.05, 1))
+# 1.1
+
+print(round_up(0.6))
+# 1.0
+
+print(round_up(17.128, -1))
+# 20.0
+
+print(round_up(1159, -2))
+# 1200.0
+```
+
 
 <h2><p align="center">lists</p></h2>
 
